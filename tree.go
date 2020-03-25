@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type BracketTree struct {
 	original string
@@ -75,32 +78,32 @@ func indexOfClosingBracket(treeRune []rune, startParenthesisIndex int) (int, err
 func parseNodesFromRuneArray(treeRune []rune, treeStartIndex int, treeEndIndex int) (*Node, error) {
 	i := treeStartIndex
 	// iterate through the rune array to find the node's value
-	var val string
+	var sb strings.Builder
 	for i < treeEndIndex && treeRune[i] != '(' && treeRune[i] != ')' {
-		val += string(treeRune[i])
+		sb.WriteRune(treeRune[i])
 		i++
 	}
-	if val == "" {
+	node := &Node{Value: sb.String()}
+	if node.Value == "" {
 		return nil, fmt.Errorf(fmt.Sprintf("node value at index %v should not be empty", treeStartIndex))
 	}
-	node := &Node{Value: val}
 
-	// iterate through children and recursively call the function to parse children
-	childTreeIndex := i
-	for childTreeIndex < treeEndIndex {
-		if treeRune[childTreeIndex] != '(' {
-			return node, fmt.Errorf("expected %q but got %q, failed at index %v", '(', treeRune[childTreeIndex], childTreeIndex)
+	// iterate through children and recursively call the function to parse children trees
+	childTreeStartIndex := i
+	for childTreeStartIndex < treeEndIndex {
+		if treeRune[childTreeStartIndex] != '(' {
+			return node, fmt.Errorf("expected %q but got %q, failed at index %v", '(', treeRune[childTreeStartIndex], childTreeStartIndex)
 		}
-		closingI, err := indexOfClosingBracket(treeRune, childTreeIndex)
+		closingBracketIndex, err := indexOfClosingBracket(treeRune, childTreeStartIndex)
 		if err != nil {
 			return node, err
 		}
-		childTree, err := parseNodesFromRuneArray(treeRune, childTreeIndex+1, closingI)
+		childTree, err := parseNodesFromRuneArray(treeRune, childTreeStartIndex+1, closingBracketIndex)
 		if err != nil {
 			return node, err
 		}
 		node.Children = append(node.Children, *childTree)
-		childTreeIndex = closingI + 1
+		childTreeStartIndex = closingBracketIndex + 1
 	}
 	return node, nil
 }
