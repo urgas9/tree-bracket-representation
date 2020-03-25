@@ -21,24 +21,15 @@ func NewBracketTree(treeString string) BracketTree {
 	}
 }
 
-func (b *BracketTree) Parse() error {
-	if b.Valid() {
-		n, err := parseNodesFromRuneArray([]rune(b.original), 0, len(b.original))
-		b.node = n
-		return err
-	}
-	return fmt.Errorf("%q is not a valid tree representation", b.original)
-}
-
 func (b *BracketTree) Valid() bool {
 	return b.error == nil
 }
 
-func (b *BracketTree) BracketRepresentation() string {
+func (b *BracketTree) BracketRepresentation() (string, error) {
 	if b.error != nil {
-		return b.error.Error()
+		return "", b.error
 	}
-	return b.node.BracketRepresentation()
+	return b.node.BracketRepresentation(), nil
 }
 
 type Node struct {
