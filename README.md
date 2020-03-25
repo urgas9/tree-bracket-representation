@@ -14,3 +14,8 @@ A tree:
 Could be simply presented as:
 
     A(CD)(E(F)(G))(I)
+
+
+Should fail
+
+    A(CD)a
