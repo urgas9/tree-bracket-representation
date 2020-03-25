@@ -107,25 +107,3 @@ func parseNodesFromRuneArray(treeRune []rune, treeStartIndex int, treeEndIndex i
 	}
 	return node, nil
 }
-
-// validRepresentation is a helper function which
-func validRepresentation(treeRune []rune) bool {
-	parenCounter := 0
-	lastOpening := 0
-	for i := 0; i < len(treeRune); i++ {
-		if treeRune[i] == '(' {
-			if lastOpening >= i {
-				return false // there is a tree node without a name, something like ((, or string starting with (
-			}
-			lastOpening = i
-			parenCounter++
-		}
-		if treeRune[i] == ')' {
-			if i-lastOpening <= 1 {
-				return false // there is a tree node without a name, something like ()
-			}
-			parenCounter--
-		}
-	}
-	return parenCounter == 0
-}
