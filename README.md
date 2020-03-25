@@ -2,12 +2,15 @@
 
 [![Lint Status](https://github.com/urgas9/tree-bracket-representation/workflows/Go/badge.svg)](https://github.com/urgas9/tree-bracket-representation)
 
-Reading and writing of a string tree bracket representation
+Reading and writing of a string tree bracket representation in multiple programming languages.
 
-## What does it solve
+## What is this project about?
 
-It is a simple hoby, created mainly to learn new tools and languages. The goal of the program is to read and write trees
-from a bracket string representation. Read more on the representation from this [link](https://www.geeksforgeeks.org/binary-tree-string-brackets/) 
+It is a simple hoby project, created mainly to learn new tools and languages and to be able to directly compare pros and cons of each language. 
+So there will be many solutions in the repo, divided by programming languages, e.g. `java` and `go`.
+
+The goal of the program is to read and write tree structure from a bracket string representation. 
+Read more on the representation from this [link](https://www.geeksforgeeks.org/binary-tree-string-brackets/) 
 but bare in mind that this library supports reading and writing of general trees as well.
  
 For example, the below tree:
@@ -18,16 +21,16 @@ For example, the below tree:
            / \
            F  G
 
-Could be simply presented as:
+could simply be presented as:
 
     A(CD)(E(F)(G))(I)
 
 
-But on the other hand, here are some examples of invalid tree strings:
+on the other hand, here are some examples of invalid tree strings:
 
-    A(CD)a
-    ()
-    (A)
+    A(CD)a      // there is undefined node a
+    ()          // two errors: the root node and its first child have no name
+    (A)         // the root node has no name
     
 ## Example usage in Go
 
