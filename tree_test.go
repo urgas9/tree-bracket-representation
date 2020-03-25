@@ -107,10 +107,11 @@ func TestNewBracketTree_RootNode_Manipulate(t *testing.T) {
 	node, err := bt.RootNode()
 	assert.Nil(t, err)
 	assert.NotEmpty(t, node)
+	node.Value = "root"
 	node.Children[0].Children[0].Children[0].Value = "Deep child"
 	node.Children[2].Value = "3rd child"
 
 	repr, err := bt.BracketRepresentation()
-	assert.Equal(t, "Alc(CD(Arr(Deep child)))(E(F)(G))(3rd child)(H(D)(MN))", repr)
+	assert.Equal(t, "root(CD(Arr(Deep child)))(E(F)(G))(3rd child)(H(D)(MN))", repr)
 	assert.Nil(t, err)
 }

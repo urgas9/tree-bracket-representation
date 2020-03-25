@@ -21,11 +21,11 @@ func NewBracketTree(treeString string) BracketTree {
 	}
 }
 
-func (b *BracketTree) RootNode() (Node, error) {
+func (b *BracketTree) RootNode() (*Node, error) {
 	if b.error != nil {
-		return Node{}, b.error
+		return nil, b.error
 	}
-	return *b.node, nil
+	return b.node, nil
 }
 
 func (b *BracketTree) Valid() bool {
