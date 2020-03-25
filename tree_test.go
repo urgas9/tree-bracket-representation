@@ -27,8 +27,8 @@ func TestNewBracketTree_ValidStrings(t *testing.T) {
 }
 
 func TestNewBracketTree_InvalidStrings(t *testing.T) {
-	var testCases = []struct{
-		name string
+	var testCases = []struct {
+		name       string
 		treeString string
 	}{
 		{name: "empty string", treeString: ""},
