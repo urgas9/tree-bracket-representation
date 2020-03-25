@@ -1,4 +1,7 @@
 # tree-bracket-representation
+
+[![Lint Status](https://github.com/urgas9/tree-bracket-representation/workflows/Go/badge.svg)](https://github.com/urgas9/tree-bracket-representation)
+
 Reading and writing of a string tree bracket representation
 
 ## What does it solve
