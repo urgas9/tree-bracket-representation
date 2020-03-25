@@ -9,7 +9,7 @@ type BracketTree struct {
 }
 
 func NewBracketTree(treeString string) BracketTree {
-	n, err := nodeTreeFromString([]rune(treeString), 0, len(treeString))
+	n, err := parseNodesFromRuneArray([]rune(treeString), 0, len(treeString))
 
 	return BracketTree{
 		original: treeString,
@@ -20,7 +20,7 @@ func NewBracketTree(treeString string) BracketTree {
 
 func (b *BracketTree) Parse() error {
 	if b.Valid() {
-		n, err := nodeTreeFromString([]rune(b.original), 0, len(b.original))
+		n, err := parseNodesFromRuneArray([]rune(b.original), 0, len(b.original))
 		b.node = n
 		return err
 	}
@@ -71,9 +71,10 @@ func indexOfClosingBracket(treeRune []rune, startParenthesisIndex int) (int, err
 	return -1, fmt.Errorf("ran till the end, but could not find the ending bracket")
 }
 
-// nodeTreeFromString is a helper recursive function that takes an array of runes as input and returns the tree structure - object Node
-func nodeTreeFromString(treeRune []rune, treeStartIndex int, treeEndIndex int) (*Node, error) {
+// parseNodesFromRuneArray is a helper recursive function that takes an array of runes as input and returns the tree structure - object Node
+func parseNodesFromRuneArray(treeRune []rune, treeStartIndex int, treeEndIndex int) (*Node, error) {
 	i := treeStartIndex
+	// iterate through the rune array to find the node's value
 	var val string
 	for i < treeEndIndex && treeRune[i] != '(' && treeRune[i] != ')' {
 		val += string(treeRune[i])
@@ -84,21 +85,22 @@ func nodeTreeFromString(treeRune []rune, treeStartIndex int, treeEndIndex int) (
 	}
 	node := &Node{Value: val}
 
-	childI := i
-	for childI < treeEndIndex {
-		if treeRune[childI] != '(' {
-			return node, fmt.Errorf("not a valid tree representation, failed at index %v with %q", childI, treeRune[childI])
+	// iterate through children and recursively call the function to parse children
+	childTreeIndex := i
+	for childTreeIndex < treeEndIndex {
+		if treeRune[childTreeIndex] != '(' {
+			return node, fmt.Errorf("expected %q but got %q, failed at index %v", '(', treeRune[childTreeIndex], childTreeIndex)
 		}
-		closingI, err := indexOfClosingBracket(treeRune, childI)
+		closingI, err := indexOfClosingBracket(treeRune, childTreeIndex)
 		if err != nil {
 			return node, err
 		}
-		childTree, err := nodeTreeFromString(treeRune, childI+1, closingI)
+		childTree, err := parseNodesFromRuneArray(treeRune, childTreeIndex+1, closingI)
 		if err != nil {
 			return node, err
 		}
 		node.Children = append(node.Children, *childTree)
-		childI = closingI + 1
+		childTreeIndex = closingI + 1
 	}
 	return node, nil
 }
