@@ -7,7 +7,7 @@ public class BracketTreeTests {
     void validSimpleBracketTreeString() {
         String in = "A(B)(C)";
         BracketTree b = new BracketTree(in);
-        b.Parse();
+        b.parse();
         assert in.equals(b.toBracketRepresentation());
     }
 
