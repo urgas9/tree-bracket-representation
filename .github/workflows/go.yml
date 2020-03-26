@@ -22,9 +22,13 @@ jobs:
         working-directory: ./java
         run: mvn test
 
+      - name: Checkstyle
+        working-directory: ./java
+        run: mvn checkstyle:checkstyle
+
       - name: SpotBugs
         working-directory: ./java
-        run: mvn spotbugs:gui
+        run: mvn spotbugs:check
 
   build:
     name: Lint & test
