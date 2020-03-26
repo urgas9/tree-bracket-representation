@@ -28,7 +28,7 @@ public class BracketTree {
         if (this.original.charAt(startIndex) != '(') {
             throw new ParseException(String.format("expected '%s' but found '%s' at index %s", '(', this.original.charAt(startIndex), startIndex));
         }
-        var bracketsCount = 1;
+        int bracketsCount = 1;
         for (int i = startIndex + 1; i < this.original.length(); i++) {
             if (this.original.charAt(i) == '(') {
                 bracketsCount++;
@@ -58,7 +58,7 @@ public class BracketTree {
         }
 
         // Create root node
-        var node = new Node(sb.toString());
+        Node node = new Node(sb.toString());
         // start parsing children
         int childTreeStartIndex = i;
         while (childTreeStartIndex < endIndex) {
