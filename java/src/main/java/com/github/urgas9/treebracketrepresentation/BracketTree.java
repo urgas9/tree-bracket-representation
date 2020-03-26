@@ -16,7 +16,7 @@ public class BracketTree {
         return this.rootNode.toBracketRepresentation();
     }
 
-    public void Parse() {
+    public void parse() {
         try {
             this.rootNode = this.parseTreeFromString(0, this.original.length());
         } catch (Exception e) {
