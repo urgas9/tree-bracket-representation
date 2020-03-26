@@ -1,4 +1,4 @@
-name: Go
+name: Test & Lint all
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-java:
-    name: JUnit
+    name: Java
     runs-on: ubuntu-latest
     steps:
 
@@ -18,16 +18,16 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Test with Maven
-        working-directory: ./java
-        run: mvn test
-
-      - name: SpotBugs
+      - name: Lint
         working-directory: ./java
         run: mvn spotbugs:check
 
-  build:
-    name: Lint & test
+      - name: Test
+        working-directory: ./java
+        run: mvn test
+
+  test-go:
+    name: Go
     runs-on: ubuntu-latest
     steps:
 
