@@ -32,6 +32,9 @@ on the other hand, here are some examples of invalid tree strings:
     ()          // two errors: the root node and its first child have no name
     (A)         // the root node has no name
     
+See more [valid](./examples/bracket-tree-valid-cases.json) and [invalid](./examples/bracket-tree-invalid-cases.json) 
+examples in the files used for tests across different implementations in `./examples` folder.
+
 ## Example usage in Go
 
     // Create a new tree from string

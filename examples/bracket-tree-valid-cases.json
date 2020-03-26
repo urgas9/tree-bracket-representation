@@ -1,0 +1,23 @@
+[
+  {
+    "bracketTree": "A"
+  },
+  {
+    "bracketTree": "A(L)"
+  },
+  {
+    "bracketTree": "Alc(CD(Arr(Haa)))(E(F)(G))(I)(H(D)(MN))"
+  },
+  {
+    "bracketTree": "A(B)(C)(D)(E)(F)(G)(H)"
+  },
+  {
+    "bracketTree": "A(B(C(D(E(F(G(H(I(J(K))))))))))"
+  },
+  {
+    "bracketTree": "Long(words)(are(my)(friends))(say(hi))"
+  },
+  {
+    "bracketTree": "T h i s( o = n = e )(-has-(3many3)(%special^))(&chars!(_!+))"
+  }
+]

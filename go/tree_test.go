@@ -1,24 +1,48 @@
 package brackettree
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
+const (
+	exampleFilePathValidCases   = "../examples/bracket-tree-valid-cases.json"
+	exampleFilePathInvalidCases = "../examples/bracket-tree-invalid-cases.json"
+)
+
+type TestCase struct {
+	Name        string `json:"name"`
+	BracketTree string `json:"bracketTree"`
+}
+
+func readExampleTestCases(t *testing.T, filePath string) []TestCase {
+	t.Helper()
+
+	jsonFile, err := os.Open(filePath)
+	require.Nil(t, err)
+	defer jsonFile.Close()
+
+	byteJSON, err := ioutil.ReadAll(jsonFile)
+	require.Nil(t, err)
+
+	var treeObj []TestCase
+	err = json.Unmarshal(byteJSON, &treeObj)
+	require.Nil(t, err)
+
+	return treeObj
+}
+
 func TestNewBracketTree_ValidStrings(t *testing.T) {
-	var testCases = []string{
-		"A",
-		"A(L)",
-		"Alc(CD(Arr(Haa)))(E(F)(G))(I)(H(D)(MN))",
-		"A(B)(C)(D)(E)(F)(G)(H)",
-		"A(B(C(D(E(F(G(H(I(J(K))))))))))",
-		"Long(words)(are(my)(friends))(say(hi))",
-	}
-	for _, tt := range testCases {
-		t.Run(tt, func(t *testing.T) {
-			bt := NewBracketTree(tt)
-			assert.Equal(t, tt, bt.original)
+	validTestCases := readExampleTestCases(t, exampleFilePathValidCases)
+	for _, tc := range validTestCases {
+		t.Run(tc.BracketTree, func(t *testing.T) {
+			bt := NewBracketTree(tc.BracketTree)
+			assert.Equal(t, tc.BracketTree, bt.original)
 			assert.Nil(t, bt.error)
 			assert.NotEmpty(t, bt.node)
 			assert.True(t, bt.Valid())
@@ -27,21 +51,11 @@ func TestNewBracketTree_ValidStrings(t *testing.T) {
 }
 
 func TestNewBracketTree_InvalidStrings(t *testing.T) {
-	var testCases = []struct {
-		name       string
-		treeString string
-	}{
-		{name: "empty string", treeString: ""},
-		{name: "empty root", treeString: "(A)"},
-		{name: "empty node value", treeString: "A()"},
-		{name: "too many closing brackets", treeString: "A(MN))"},
-		{name: "missing closing bracket", treeString: "A("},
-		{name: "wrong ending", treeString: "A(CD)a"},
-	}
-	for _, tt := range testCases {
-		t.Run(tt.name, func(t *testing.T) {
-			bt := NewBracketTree(tt.treeString)
-			assert.Equal(t, tt.treeString, bt.original)
+	invalidTestCases := readExampleTestCases(t, exampleFilePathInvalidCases)
+	for _, tc := range invalidTestCases {
+		t.Run(tc.Name, func(t *testing.T) {
+			bt := NewBracketTree(tc.BracketTree)
+			assert.Equal(t, tc.BracketTree, bt.original)
 			assert.NotEmpty(t, bt.error)
 			assert.False(t, bt.Valid())
 			//assert.Empty(t, bt.node)
@@ -50,38 +64,28 @@ func TestNewBracketTree_InvalidStrings(t *testing.T) {
 }
 
 func TestNewBracketTree_BracketPresentationInputOutput(t *testing.T) {
-	var testCases = []string{
-		"A",
-		"A(L)",
-		"Alc(CD(A r  r(Haa)))(E(F)(G))(I)(H(D)(MN))",
-		"A(B)(C)(D)(E)(F)(G)(H)",
-		"A(B(C(D(E(F(G(H(I(J(K))))))))))",
-	}
-	for _, tt := range testCases {
-		t.Run(tt, func(t *testing.T) {
-			bt := NewBracketTree(tt)
-			assert.Equal(t, tt, bt.original)
+	validTestCases := readExampleTestCases(t, exampleFilePathValidCases)
+	for _, tc := range validTestCases {
+		t.Run(tc.BracketTree, func(t *testing.T) {
+			bt := NewBracketTree(tc.BracketTree)
+			assert.Equal(t, tc.BracketTree, bt.original)
 			assert.Nil(t, bt.error)
 			assert.NotEmpty(t, bt.node)
 			assert.True(t, bt.Valid())
 
 			repr, err := bt.BracketRepresentation()
 			assert.Nil(t, err)
-			assert.Equal(t, tt, repr)
+			assert.Equal(t, tc.BracketTree, repr)
 		})
 	}
 }
 
 func TestNewBracketTree_BracketPresentation_Invalid(t *testing.T) {
-	var testCases = []string{
-		"",
-		"(L)",
-		"((",
-	}
-	for _, tt := range testCases {
-		t.Run(tt, func(t *testing.T) {
-			bt := NewBracketTree(tt)
-			assert.Equal(t, tt, bt.original)
+	invalidTestCases := readExampleTestCases(t, exampleFilePathInvalidCases)
+	for _, tc := range invalidTestCases {
+		t.Run(tc.Name, func(t *testing.T) {
+			bt := NewBracketTree(tc.BracketTree)
+			assert.Equal(t, tc.BracketTree, bt.original)
 			assert.NotNil(t, bt.error)
 			assert.False(t, bt.Valid())
 

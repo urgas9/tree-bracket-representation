@@ -1,0 +1,30 @@
+[
+  {
+    "name": "empty string",
+    "bracketTree": ""
+  },
+  {
+    "name": "empty root",
+    "bracketTree": "(A)"
+  },
+  {
+    "name": "empty node value",
+    "bracketTree": "A()"
+  },
+  {
+    "name": "too many closing brackets",
+    "bracketTree": "A(MN))"
+  },
+  {
+    "name": "missing closing bracket",
+    "bracketTree": "A("
+  },
+  {
+    "name": "wrong ending",
+    "bracketTree": "A(CD)a"
+  },
+  {
+    "name": "empty node + no closing brackets",
+    "bracketTree": "(("
+  }
+]
