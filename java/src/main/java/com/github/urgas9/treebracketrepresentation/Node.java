@@ -24,7 +24,7 @@ public class Node {
     }
 
     public String toBracketRepresentation() {
-        StringBuilder sb = new StringBuilder(this.name);
+        var sb = new StringBuilder(this.name);
         if (this.children != null) {
             for (var child : this.children) {
                 sb.append(String.format("(%s)", child.toBracketRepresentation()));

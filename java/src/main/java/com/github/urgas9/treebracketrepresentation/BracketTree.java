@@ -45,7 +45,7 @@ public class BracketTree {
 
     protected Node parseTreeFromString(int startIndex, int endIndex) throws ParseException {
         // First, read node name
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         int i = startIndex;
         char currentChar;
         while (i < endIndex && (currentChar = this.original.charAt(i)) != '(') {
@@ -58,7 +58,7 @@ public class BracketTree {
         }
 
         // Create root node
-        Node node = new Node(sb.toString());
+        var node = new Node(sb.toString());
         // start parsing children
         int childTreeStartIndex = i;
         while (childTreeStartIndex < endIndex) {
