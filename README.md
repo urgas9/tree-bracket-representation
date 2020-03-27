@@ -1,6 +1,6 @@
 # tree-bracket-representation
 
-[![Lint Status](https://github.com/urgas9/tree-bracket-representation/workflows/main/badge.svg)](https://github.com/urgas9/tree-bracket-representation)
+[![Test & Lint all](https://github.com/urgas9/tree-bracket-representation/workflows/Test%20&%20Lint%20all/badge.svg)](https://github.com/urgas9/tree-bracket-representation)
 
 Reading and writing of a string tree bracket representation in multiple programming languages.
 
