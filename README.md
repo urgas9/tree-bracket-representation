@@ -6,8 +6,8 @@ Reading and writing of a string tree bracket representation in multiple programm
 
 ## What is this project about?
 
-It is a simple hoby project, created mainly to learn new tools and languages and to be able to directly compare pros and cons of each language. 
-So there will be many solutions in the repo, divided by programming languages, e.g. `java` and `go`.
+It is a simple hoby project, created mainly to learn new tools, languages and to be able to directly compare pros and 
+cons of each language. So there will be many solutions in the repo, divided by programming languages, e.g. `java` and `go`.  
 
 The goal of the program is to read and write tree structure from a bracket string representation. 
 Read more on the representation from this [link](https://www.geeksforgeeks.org/binary-tree-string-brackets/) 
@@ -34,6 +34,12 @@ on the other hand, here are some examples of invalid tree strings:
     
 See more [valid](./examples/bracket-tree-valid-cases.json) and [invalid](./examples/bracket-tree-invalid-cases.json) 
 examples in the files used for tests across different implementations in `./examples` folder.
+
+## Requirements
+
+Each language should add support for the following function:
+* `parse`: parses a bracket tree string representation to an internal object structure
+* `toBracketRepresentation`: converts the internal object structure back to bracket tree string representation 
 
 ## Example usage in Go
 
