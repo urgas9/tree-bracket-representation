@@ -1,8 +1,8 @@
+import com.github.urgas9.treebracketrepresentation.BracketTree;
 import com.github.urgas9.treebracketrepresentation.ParseException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import com.github.urgas9.treebracketrepresentation.BracketTree;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -25,23 +25,18 @@ public class BracketTreeTests {
     public void setup() throws IOException {
         Gson gson = new Gson();
 
-        System.out.println("Reading JSON from a file");
-        System.out.println("----------------------------");
-
-        System.out.println("Working Directory = " +
-                System.getProperty("user.dir"));
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
         //read file and convert the JSON string back to object using GSON deserializer
+        System.out.println("Reading valid test cases from '" + this.VALID_EXAMPLES_FILEPATH + "'");
         BufferedReader brValid = new BufferedReader(
                 new FileReader(this.VALID_EXAMPLES_FILEPATH));
         this.validStringTestCases = gson.fromJson(brValid, TestCase[].class);
 
+        System.out.println("Reading valid test cases from '" + this.INVALID_EXAMPLES_FILEPATH + "'");
         BufferedReader brInvalid = new BufferedReader(
                 new FileReader(this.INVALID_EXAMPLES_FILEPATH));
         this.invalidStringTestCases = gson.fromJson(brInvalid, TestCase[].class);
-
-        System.out.println("Test cases: " + this.invalidStringTestCases);
-
     }
 
     private Stream<TestCase> getValidCases() {
