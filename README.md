@@ -41,6 +41,12 @@ Each language should add support for the following function:
 * `parse`: parses a bracket tree string representation to an internal object structure
 * `toBracketRepresentation`: converts the internal object structure back to bracket tree string representation 
 
+For each language there should also be:
+* written **tests** that read invalid and valid test cases from JSON files
+stored in [`./examples`](./examples) folder. 
+* a **linting tool** to be added to check for code style.
+* the execution of tests and lint tool should be included in [GitHub Actions workflow file](./.github/workflows/main.yml).
+
 ## Example usage in Go
 
     // Create a new tree from string
