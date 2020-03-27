@@ -12,16 +12,16 @@ public class BracketTree {
         return this.rootNode;
     }
 
+    public String getOriginal() {
+        return this.original;
+    }
+
     public String toBracketRepresentation() {
         return this.rootNode.toBracketRepresentation();
     }
 
-    public void parse() {
-        try {
-            this.rootNode = this.parseTreeFromString(0, this.original.length());
-        } catch (Exception e) {
-            System.err.println("cannot parse tree " + e.getMessage());
-        }
+    public void parse() throws ParseException {
+        this.rootNode = this.parseTreeFromString(0, this.original.length());
     }
 
     protected int getIndexOfClosingBracket(int startIndex) throws ParseException {
