@@ -38,7 +38,7 @@ examples in the files used for tests across different implementations in `./exam
 ## Requirements
 
 Each language should add support for the following function:
-* `parse`: parses a bracket tree string representation to an internal object structure
+* object constructor: parses a bracket tree string representation to an internal object structure and stores initial bracket tree string
 * `toBracketRepresentation`: converts the internal object structure back to bracket tree string representation 
 
 For each language there should also be:
