@@ -4,36 +4,21 @@ public class BracketTree {
     private String original;
     private Node rootNode;
 
-    public BracketTree(String treeString) {
+    public BracketTree(String treeString) throws ParseException {
         this.original = treeString;
+        this.rootNode = parseTreeFromString(treeString, 0, this.original.length());
     }
 
-    public Node getRootNode() {
-        return this.rootNode;
-    }
-
-    public String getOriginal() {
-        return this.original;
-    }
-
-    public String toBracketRepresentation() {
-        return this.rootNode.toBracketRepresentation();
-    }
-
-    public void parse() throws ParseException {
-        this.rootNode = this.parseTreeFromString(0, this.original.length());
-    }
-
-    protected int getIndexOfClosingBracket(int startIndex) throws ParseException {
-        if (this.original.charAt(startIndex) != '(') {
-            throw new ParseException(String.format("expected '%s' but found '%s' at index %s", '(', this.original.charAt(startIndex), startIndex));
+    protected static int getIndexOfClosingBracket(String bracketTree, int startIndex) throws ParseException {
+        if (bracketTree.charAt(startIndex) != '(') {
+            throw new ParseException(String.format("expected '%s' but found '%s' at index %s", '(', bracketTree.charAt(startIndex), startIndex));
         }
         int bracketsCount = 1;
-        for (int i = startIndex + 1; i < this.original.length(); i++) {
-            if (this.original.charAt(i) == '(') {
+        for (int i = startIndex + 1; i < bracketTree.length(); i++) {
+            if (bracketTree.charAt(i) == '(') {
                 bracketsCount++;
             }
-            if (this.original.charAt(i) == ')') {
+            if (bracketTree.charAt(i) == ')') {
                 bracketsCount--;
             }
             if (bracketsCount == 0) {
@@ -43,12 +28,12 @@ public class BracketTree {
         return -1;
     }
 
-    protected Node parseTreeFromString(int startIndex, int endIndex) throws ParseException {
+    protected static Node parseTreeFromString(String bracketTree, int startIndex, int endIndex) throws ParseException {
         // First, read node name
         StringBuilder sb = new StringBuilder();
         int i = startIndex;
         char currentChar;
-        while (i < endIndex && (currentChar = this.original.charAt(i)) != '(') {
+        while (i < endIndex && (currentChar = bracketTree.charAt(i)) != '(') {
             sb.append(currentChar);
             i++;
         }
@@ -62,10 +47,22 @@ public class BracketTree {
         // start parsing children
         int childTreeStartIndex = i;
         while (childTreeStartIndex < endIndex) {
-            int childTreeEndIndex = this.getIndexOfClosingBracket(childTreeStartIndex);
-            node.addChild(this.parseTreeFromString(childTreeStartIndex + 1, childTreeEndIndex));
+            int childTreeEndIndex = getIndexOfClosingBracket(bracketTree, childTreeStartIndex);
+            node.addChild(parseTreeFromString(bracketTree, childTreeStartIndex + 1, childTreeEndIndex));
             childTreeStartIndex = childTreeEndIndex + 1;
         }
         return node;
+    }
+
+    public Node getRootNode() {
+        return this.rootNode;
+    }
+
+    public String getOriginal() {
+        return this.original;
+    }
+
+    public String toBracketRepresentation() {
+        return this.rootNode.toBracketRepresentation();
     }
 }

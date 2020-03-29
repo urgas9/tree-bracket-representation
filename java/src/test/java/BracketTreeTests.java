@@ -51,7 +51,6 @@ public class BracketTreeTests {
     @MethodSource("getValidCases")
     void validBracketTreeString(TestCase tc) throws ParseException {
         BracketTree b = new BracketTree(tc.getBracketTree());
-        b.parse();
         assert tc.getBracketTree().equals(b.toBracketRepresentation());
         assert tc.getBracketTree().equals(b.getOriginal());
     }
@@ -59,10 +58,7 @@ public class BracketTreeTests {
     @ParameterizedTest
     @MethodSource("getInvalidCases")
     void invalidBracketTreeString(TestCase tc) {
-        BracketTree b = new BracketTree(tc.getBracketTree());
-
-        Assertions.assertThrows(ParseException.class, b::parse);
-        assert tc.getBracketTree().equals(b.getOriginal());
+        Assertions.assertThrows(ParseException.class, () -> new BracketTree(tc.getBracketTree()));
     }
 
 }
