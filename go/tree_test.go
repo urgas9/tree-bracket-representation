@@ -161,7 +161,6 @@ func TestNewBracketTree_Find_NonExisting(t *testing.T) {
 }
 
 func TestNewBracketTree_CountLeaves(t *testing.T) {
-
 	validTestCases := readExampleTestCases(t, exampleFilePathValidCases)
 	for _, tc := range validTestCases {
 		t.Run(tc.BracketTree, func(t *testing.T) {
@@ -171,4 +170,30 @@ func TestNewBracketTree_CountLeaves(t *testing.T) {
 			assert.Equal(t, tc.NumLeaves, bt.RootNode().CountLeaves())
 		})
 	}
+}
+
+func TestNewBracketTree_Add_Valid(t *testing.T) {
+	bracketTree := "H(D)(MN)"
+	bt, err := NewBracketTree(bracketTree)
+	assert.Nil(t, err)
+
+	err = bt.RootNode().Add("(H)(K)(L)")
+	assert.Nil(t, err)
+
+	assert.Equal(t, "H(D)(MN)(H)(K)(L)", bt.BracketRepresentation())
+}
+
+func TestNewBracketTree_Add_Invalid(t *testing.T) {
+	bracketTree := "H(D)(MN)"
+	bt, err := NewBracketTree(bracketTree)
+	assert.Nil(t, err)
+
+	err = bt.RootNode().Add("s(H)(K)(L)")
+	assert.NotNil(t, err)
+
+	err = bt.RootNode().Add("(H)(K)(")
+	assert.NotNil(t, err)
+
+	err = bt.RootNode().Add("()")
+	assert.NotNil(t, err)
 }

@@ -67,6 +67,15 @@ func (n Node) CountLeaves() int {
 	return leaves
 }
 
+func (n *Node) Add(childrenString string) error {
+	nodes, err := parseChildrenNodesFromRuneArray([]rune(childrenString), 0, len(childrenString))
+	if err != nil {
+		return err
+	}
+	n.Children = append(n.Children, nodes...)
+	return nil
+}
+
 // indexOfClosingBracket is a helper function returning an index of the closing bracket
 func indexOfClosingBracket(treeRune []rune, startParenthesisIndex int) (int, error) {
 	if treeRune[startParenthesisIndex] != '(' {
@@ -102,21 +111,31 @@ func parseNodesFromRuneArray(treeRune []rune, treeStartIndex int, treeEndIndex i
 	}
 
 	// iterate through children and recursively call the function to parse children trees
-	childTreeStartIndex := i
+
+	childrenNodes, err := parseChildrenNodesFromRuneArray(treeRune, i, treeEndIndex)
+	if err != nil {
+		return nil, err
+	}
+	node.Children = childrenNodes
+	return node, nil
+}
+
+func parseChildrenNodesFromRuneArray(treeRune []rune, childTreeStartIndex int, treeEndIndex int) ([]Node, error) {
+	var childrenNodes []Node
 	for childTreeStartIndex < treeEndIndex {
 		if treeRune[childTreeStartIndex] != '(' {
-			return node, fmt.Errorf("expected %q but got %q, failed at index %v", '(', treeRune[childTreeStartIndex], childTreeStartIndex)
+			return nil, fmt.Errorf("expected %q but got %q, failed at index %v", '(', treeRune[childTreeStartIndex], childTreeStartIndex)
 		}
 		closingBracketIndex, err := indexOfClosingBracket(treeRune, childTreeStartIndex)
 		if err != nil {
-			return node, err
+			return nil, err
 		}
 		childTree, err := parseNodesFromRuneArray(treeRune, childTreeStartIndex+1, closingBracketIndex)
 		if err != nil {
-			return node, err
+			return nil, err
 		}
-		node.Children = append(node.Children, *childTree)
+		childrenNodes = append(childrenNodes, *childTree)
 		childTreeStartIndex = closingBracketIndex + 1
 	}
-	return node, nil
+	return childrenNodes, nil
 }
