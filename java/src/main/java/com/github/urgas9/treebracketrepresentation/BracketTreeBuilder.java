@@ -40,7 +40,7 @@ public class BracketTreeBuilder {
     }
 
     private static Node parseTreeNodesFromString(String bracketTree, int startIndex, int endIndex) throws ParseException {
-        // First, read node name
+        // First, read  root node name
         StringBuilder sb = new StringBuilder();
         int i = startIndex;
         char currentChar;
@@ -53,7 +53,14 @@ public class BracketTreeBuilder {
             throw new ParseException(String.format("node name of the tree starting at index %x is empty", startIndex));
         }
 
-        // recursive call to parse children nodes
+        Node node = new Node(sb.toString(), null);
+        // parse children nodes
+        int childTreeStartIndex = i;
+        while (childTreeStartIndex < endIndex) {
+            int childTreeEndIndex = getIndexOfClosingBracket(bracketTree, childTreeStartIndex);
+            node.addChild(parseTreeNodesFromString(bracketTree, childTreeStartIndex + 1, childTreeEndIndex));
+            childTreeStartIndex = childTreeEndIndex + 1;
+        }
         return new Node(sb.toString(), parseChildrenNodesFromString(bracketTree, i, endIndex));
     }
 
