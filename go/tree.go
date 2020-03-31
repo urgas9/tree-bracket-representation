@@ -81,7 +81,7 @@ func parseTreeNodesFromRuneArray(treeRune []rune, treeStartIndex int, treeEndInd
 	i := treeStartIndex
 	// iterate through the rune array to find the node's value
 	var sb strings.Builder
-	for i < treeEndIndex && treeRune[i] != '(' && treeRune[i] != ')' {
+	for i < treeEndIndex && treeRune[i] != '(' {
 		sb.WriteRune(treeRune[i])
 		i++
 	}
