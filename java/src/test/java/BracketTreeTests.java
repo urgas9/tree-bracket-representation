@@ -4,6 +4,7 @@ import com.github.urgas9.treebracketrepresentation.ParseException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -59,6 +60,24 @@ public class BracketTreeTests {
     @MethodSource("getInvalidCases")
     void invalidBracketTreeString(TestCase tc) {
         Assertions.assertThrows(ParseException.class, () -> new BracketTreeBuilder(tc.getBracketTree()).build());
+    }
+
+    @Test
+    void findExisting() throws ParseException {
+        Node n = new BracketTreeBuilder("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))").build();
+        assert n.find("CD").toBracketRepresentation().equals("CD(Arr(CD))");
+        assert n.find("A").toBracketRepresentation().equals("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))");
+        assert n.find("E").toBracketRepresentation().equals("E(F)(G)");
+        assert n.find("MN").toBracketRepresentation().equals("MN");
+    }
+
+    @Test
+    void findNonExisting() throws ParseException {
+        Node n = new BracketTreeBuilder("A(B)(C)").build();
+
+        assert n.find("non existing") == null;
+        assert n.find("(") == null;
+        assert n.find(")") == null;
     }
 
 }

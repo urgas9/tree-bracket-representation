@@ -23,6 +23,21 @@ public class Node {
         return this.name;
     }
 
+    public Node find(String name) {
+        if (this.name.equals(name)) {
+            return this;
+        }
+        if (this.children != null) {
+            for (Node c : this.children) {
+                Node h = c.find(name);
+                if (h != null) {
+                    return h;
+                }
+            }
+        }
+        return null;
+    }
+
     public String toBracketRepresentation() {
         StringBuilder sb = new StringBuilder(this.name);
         if (this.children != null) {
