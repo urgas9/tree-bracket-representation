@@ -1,23 +1,30 @@
 [
   {
-    "bracketTree": "A"
+    "bracketTree": "A",
+    "numLeaves": 1
   },
   {
-    "bracketTree": "A(L)"
+    "bracketTree": "A(L)",
+    "numLeaves": 1
   },
   {
-    "bracketTree": "Alc(CD(Arr(Haa)))(E(F)(G))(I)(H(D)(MN))"
+    "bracketTree": "Alc(CD(Arr(Haa)))(E(F)(G))(I)(H(D)(MN))",
+    "numLeaves": 6
   },
   {
-    "bracketTree": "A(B)(C)(D)(E)(F)(G)(H)"
+    "bracketTree": "A(B)(C)(D)(E)(F)(G)(H)",
+    "numLeaves": 7
   },
   {
-    "bracketTree": "A(B(C(D(E(F(G(H(I(J(K))))))))))"
+    "bracketTree": "A(B(C(D(E(F(G(H(I(J(K))))))))))",
+    "numLeaves": 1
   },
   {
-    "bracketTree": "Long(words)(are(my)(friends))(say(hi))"
+    "bracketTree": "Long(words)(are(my)(friends))(say(hi))",
+    "numLeaves": 4
   },
   {
-    "bracketTree": "T h i s( o = n = e )(-has-(3many3)(%special^))(&chars!(_!+))"
+    "bracketTree": "T h i s( o = n = e )(-has-(3many3)(%special^))(&chars!(_!+))",
+    "numLeaves": 4
   }
 ]

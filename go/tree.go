@@ -55,6 +55,18 @@ func (n Node) Find(name string) *Node {
 	return nil
 }
 
+func (n Node) CountLeaves() int {
+	// leaf nodes have 0 children
+	if len(n.Children) == 0 {
+		return 1
+	}
+	leaves := 0
+	for _, c := range n.Children {
+		leaves += c.CountLeaves()
+	}
+	return leaves
+}
+
 // indexOfClosingBracket is a helper function returning an index of the closing bracket
 func indexOfClosingBracket(treeRune []rune, startParenthesisIndex int) (int, error) {
 	if treeRune[startParenthesisIndex] != '(' {

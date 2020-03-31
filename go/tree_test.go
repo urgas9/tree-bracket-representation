@@ -18,6 +18,7 @@ const (
 type TestCase struct {
 	Name        string `json:"name"`
 	BracketTree string `json:"bracketTree"`
+	NumLeaves   int    `json:"numLeaves"`
 }
 
 func readExampleTestCases(t *testing.T, filePath string) []TestCase {
@@ -149,7 +150,7 @@ func TestNewBracketTree_Find_NonExisting(t *testing.T) {
 	bracketTree := "H(D)(MN)"
 	bt, err := NewBracketTree(bracketTree)
 	assert.Nil(t, err)
-	
+
 	rootNode := bt.RootNode()
 	fNode := rootNode.Find("non-existing")
 	assert.Nil(t, fNode)
@@ -157,4 +158,17 @@ func TestNewBracketTree_Find_NonExisting(t *testing.T) {
 	assert.Nil(t, fNode)
 	fNode = rootNode.Find(")")
 	assert.Nil(t, fNode)
+}
+
+func TestNewBracketTree_CountLeaves(t *testing.T) {
+
+	validTestCases := readExampleTestCases(t, exampleFilePathValidCases)
+	for _, tc := range validTestCases {
+		t.Run(tc.BracketTree, func(t *testing.T) {
+			bt, err := NewBracketTree(tc.BracketTree)
+			assert.Nil(t, err)
+
+			assert.Equal(t, tc.NumLeaves, bt.RootNode().CountLeaves())
+		})
+	}
 }
