@@ -1,8 +1,11 @@
+from typing import List
+
+
 class Node:
 
     def __init__(self, name: str) -> None:
-        self.name = name
-        self.children = []
+        self.name: str = name
+        self.children: List[Node] = []
 
     def find(self, name: str) -> "Node":
         raise NotImplementedError()
