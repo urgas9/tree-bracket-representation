@@ -118,4 +118,60 @@ func TestNewBracketTree_RootNode_Manipulate(t *testing.T) {
 	repr, err := bt.BracketRepresentation()
 	assert.Equal(t, "root(CD(Arr(Deep child)))(E(F)(G))(3rd child)(H(D)(MN))", repr)
 	assert.Nil(t, err)
+
+	f1 := node.Find("H")
+	assert.NotNil(t, f1)
+	assert.Equal(t, "H(D)(MN)", f1.BracketRepresentation())
+
+	f2 := node.Find("CD")
+	assert.NotNil(t, f2)
+	assert.Equal(t, "CD(Arr(Deep child))", f2.BracketRepresentation())
+
+	f3 := node.Find("non-existing")
+	assert.Nil(t, f3)
+}
+
+func TestNewBracketTree_Find_Existing(t *testing.T) {
+	bracketTree := "A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))"
+	bt := NewBracketTree(bracketTree)
+	testCases := []struct {
+		name                  string
+		expectedBracketString string
+	}{
+		{
+			name:                  "CD",
+			expectedBracketString: "CD(Arr(CD))",
+		}, {
+			name:                  "A",
+			expectedBracketString: "A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))",
+		}, {
+			name:                  "E",
+			expectedBracketString: "E(F)(G)",
+		}, {
+			name:                  "MN",
+			expectedBracketString: "MN",
+		},
+	}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			rootNode, err := bt.RootNode()
+			assert.Nil(t, err)
+			fNode := rootNode.Find(tc.name)
+			assert.NotNil(t, fNode)
+			assert.Equal(t, tc.expectedBracketString, fNode.BracketRepresentation())
+		})
+	}
+}
+
+func TestNewBracketTree_Find_NonExisting(t *testing.T) {
+	bracketTree := "H(D)(MN)"
+	bt := NewBracketTree(bracketTree)
+	rootNode, err := bt.RootNode()
+	assert.Nil(t, err)
+	fNode := rootNode.Find("non-existing")
+	assert.Nil(t, fNode)
+	fNode = rootNode.Find("(")
+	assert.Nil(t, fNode)
+	fNode = rootNode.Find(")")
+	assert.Nil(t, fNode)
 }

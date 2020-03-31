@@ -52,6 +52,18 @@ func (n Node) BracketRepresentation() string {
 	return str
 }
 
+func (n Node) Find(name string) *Node {
+	if n.Value == name {
+		return &n
+	}
+	for _, c := range n.Children {
+		if n := c.Find(name); n != nil {
+			return n
+		}
+	}
+	return nil
+}
+
 // indexOfClosingBracket is a helper function returning an index of the closing bracket
 func indexOfClosingBracket(treeRune []rune, startParenthesisIndex int) (int, error) {
 	if treeRune[startParenthesisIndex] != '(' {
