@@ -1,4 +1,4 @@
-from python.brackettree.tree import Node
+from brackettree.tree import Node
 
 
 class ParseException(Exception):

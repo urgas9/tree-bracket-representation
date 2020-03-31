@@ -15,7 +15,9 @@ class Node:
         return ''.join(s)
 
     def count_leaves(self) -> int:
-        raise NotImplementedError()
+        if len(self.children) == 0:
+            return 1
+        return sum([c.count_leaves() for c in self.children])
 
     def add_child(self, bracket_tree: str) -> None:
         raise NotImplementedError()
