@@ -17,8 +17,9 @@ setup(
     install_requires=[
     ],
     extras_require={
-        'unit-tests': [
+        'tests': [
             'pytest',
+            'mypy',
         ],
     },
     include_package_data=True,
