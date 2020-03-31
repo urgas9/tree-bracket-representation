@@ -184,7 +184,7 @@ func TestNewBracketTree_Add_Valid(t *testing.T) {
 }
 
 func TestNewBracketTree_Add_Invalid(t *testing.T) {
-	bracketTree := "H(D)(MN)"
+	bracketTree := "A(B)(C)"
 	bt, err := NewBracketTree(bracketTree)
 	assert.Nil(t, err)
 
