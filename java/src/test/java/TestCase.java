@@ -1,6 +1,7 @@
 public class TestCase {
     private String name;
     private String bracketTree;
+    private int numLeaves;
 
     public String getName() {
         return name;
@@ -16,6 +17,14 @@ public class TestCase {
 
     public void setBracketTree(String bracketTree) {
         this.bracketTree = bracketTree;
+    }
+
+    public int getNumLeaves() {
+        return numLeaves;
+    }
+
+    public void setNumLeaves(int numLeaves) {
+        this.numLeaves = numLeaves;
     }
 
     @Override

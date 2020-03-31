@@ -12,42 +12,6 @@ public class Node {
         this.children = null;
     }
 
-    public void addChild(Node child) {
-        if (this.children == null) {
-            this.children = new ArrayList<>();
-        }
-        this.children.add(child);
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Node find(String name) {
-        if (this.name.equals(name)) {
-            return this;
-        }
-        if (this.children != null) {
-            for (Node c : this.children) {
-                Node h = c.find(name);
-                if (h != null) {
-                    return h;
-                }
-            }
-        }
-        return null;
-    }
-
-    public String toBracketRepresentation() {
-        StringBuilder sb = new StringBuilder(this.name);
-        if (this.children != null) {
-            for (Node child : this.children) {
-                sb.append(String.format("(%s)", child.toBracketRepresentation()));
-            }
-        }
-        return sb.toString();
-    }
-
     protected static int getIndexOfClosingBracket(String bracketTree, int startIndex) throws ParseException {
         if (bracketTree.charAt(startIndex) != '(') {
             throw new ParseException(String.format("expected '%s' but found '%s' at index %s", '(', bracketTree.charAt(startIndex), startIndex));
@@ -91,5 +55,53 @@ public class Node {
             childTreeStartIndex = childTreeEndIndex + 1;
         }
         return node;
+    }
+
+    public void addChild(Node child) {
+        if (this.children == null) {
+            this.children = new ArrayList<>();
+        }
+        this.children.add(child);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Node find(String name) {
+        if (this.name.equals(name)) {
+            return this;
+        }
+        if (this.children != null) {
+            for (Node c : this.children) {
+                Node h = c.find(name);
+                if (h != null) {
+                    return h;
+                }
+            }
+        }
+        return null;
+    }
+
+    public int countLeaves() {
+        if (this.children == null || this.children.isEmpty()) {
+            return 1;
+        }
+
+        int childrenLeavesCount = 0;
+        for (Node child : this.children) {
+            childrenLeavesCount += child.countLeaves();
+        }
+        return childrenLeavesCount;
+    }
+
+    public String toBracketRepresentation() {
+        StringBuilder sb = new StringBuilder(this.name);
+        if (this.children != null) {
+            for (Node child : this.children) {
+                sb.append(String.format("(%s)", child.toBracketRepresentation()));
+            }
+        }
+        return sb.toString();
     }
 }

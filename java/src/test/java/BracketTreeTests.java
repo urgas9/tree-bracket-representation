@@ -80,4 +80,11 @@ public class BracketTreeTests {
         assert n.find(")") == null;
     }
 
+    @ParameterizedTest
+    @MethodSource("getValidCases")
+    void validBracketTreeStringCountLeaves(TestCase tc) throws ParseException {
+        Node n = new BracketTreeBuilder(tc.getBracketTree()).build();
+        assert n.countLeaves() == tc.getNumLeaves();
+    }
+
 }
