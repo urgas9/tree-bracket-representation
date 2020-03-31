@@ -87,4 +87,33 @@ public class BracketTreeTests {
         assert n.countLeaves() == tc.getNumLeaves();
     }
 
+    @Test
+    void addValidBracketTreeChild() throws ParseException {
+        Node n = new BracketTreeParser("H(D(A(C)))(MN)").parse();
+        assert n != null;
+
+        Node c = n.find("C");
+        assert c != null;
+
+        c.addChild("A(H(K))");
+        assert c.toBracketRepresentation().equals("C(A(H(K)))");
+        assert n.toBracketRepresentation().equals("H(D(A(C(A(H(K))))))(MN)");
+
+        c.addChild("B(C)(D)");
+        assert c.toBracketRepresentation().equals("C(A(H(K)))(B(C)(D))");
+        assert n.toBracketRepresentation().equals("H(D(A(C(A(H(K)))(B(C)(D)))))(MN)");
+
+        n.addChild("A");
+        assert n.toBracketRepresentation().equals("H(D(A(C(A(H(K)))(B(C)(D)))))(MN)(A)");
+    }
+
+    @ParameterizedTest
+    @MethodSource("getInvalidCases")
+    void addInvalidBracketTreeChild(TestCase tc) throws ParseException {
+        Node n = new BracketTreeParser("A(B)(C)").parse();
+        assert n != null;
+
+        Assertions.assertThrows(ParseException.class, () -> n.addChild(tc.getBracketTree()));
+    }
+
 }

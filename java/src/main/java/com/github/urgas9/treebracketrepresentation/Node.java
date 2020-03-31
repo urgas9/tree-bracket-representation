@@ -52,8 +52,7 @@ public class Node {
     }
 
     public void addChild(Node child) {
-        if (
-                this.children == null) {
+        if (this.children == null) {
             this.children = new ArrayList<>();
         }
         this.children.add(child);
