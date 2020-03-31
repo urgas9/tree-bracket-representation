@@ -1,4 +1,5 @@
-import com.github.urgas9.treebracketrepresentation.BracketTree;
+import com.github.urgas9.treebracketrepresentation.BracketTreeBuilder;
+import com.github.urgas9.treebracketrepresentation.Node;
 import com.github.urgas9.treebracketrepresentation.ParseException;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
@@ -50,15 +51,14 @@ public class BracketTreeTests {
     @ParameterizedTest
     @MethodSource("getValidCases")
     void validBracketTreeString(TestCase tc) throws ParseException {
-        BracketTree b = new BracketTree(tc.getBracketTree());
-        assert tc.getBracketTree().equals(b.toBracketRepresentation());
-        assert tc.getBracketTree().equals(b.getOriginal());
+        Node n = new BracketTreeBuilder(tc.getBracketTree()).build();
+        assert tc.getBracketTree().equals(n.toBracketRepresentation());
     }
 
     @ParameterizedTest
     @MethodSource("getInvalidCases")
     void invalidBracketTreeString(TestCase tc) {
-        Assertions.assertThrows(ParseException.class, () -> new BracketTree(tc.getBracketTree()));
+        Assertions.assertThrows(ParseException.class, () -> new BracketTreeBuilder(tc.getBracketTree()).build());
     }
 
 }
