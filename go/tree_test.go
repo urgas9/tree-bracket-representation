@@ -44,7 +44,7 @@ func TestNewBracketTree_ValidStrings(t *testing.T) {
 		t.Run(tc.BracketTree, func(t *testing.T) {
 			bt, err := NewBracketTree(tc.BracketTree)
 			assert.Nil(t, err)
-			assert.Equal(t, tc.BracketTree, bt.original)
+			assert.NotNil(t, bt)
 		})
 	}
 }
@@ -66,8 +66,7 @@ func TestNewBracketTree_BracketPresentationInputOutput(t *testing.T) {
 		t.Run(tc.BracketTree, func(t *testing.T) {
 			bt, err := NewBracketTree(tc.BracketTree)
 			assert.Nil(t, err)
-			assert.Equal(t, tc.BracketTree, bt.original)
-			assert.NotEmpty(t, bt.node)
+			assert.NotEmpty(t, bt)
 
 			assert.Equal(t, tc.BracketTree, bt.BracketRepresentation())
 		})
@@ -89,27 +88,25 @@ func TestNewBracketTree_RootNode_Manipulate(t *testing.T) {
 	tt := "Alc(CD(Arr(Haa)))(E(F)(G))(I)(H(D)(MN))"
 	bt, err := NewBracketTree(tt)
 	assert.Nil(t, err)
-	assert.Equal(t, tt, bt.original)
 
 	// Manipulate some nodes in the tree
-	node := bt.RootNode()
-	assert.NotEmpty(t, node)
-	node.Value = "root"
-	node.Children[0].Children[0].Children[0].Value = "Deep child"
-	node.Children[2].Value = "3rd child"
+	assert.NotEmpty(t, bt)
+	bt.Value = "root"
+	bt.Children[0].Children[0].Children[0].Value = "Deep child"
+	bt.Children[2].Value = "3rd child"
 
 	repr := bt.BracketRepresentation()
 	assert.Equal(t, "root(CD(Arr(Deep child)))(E(F)(G))(3rd child)(H(D)(MN))", repr)
 
-	f1 := node.Find("H")
+	f1 := bt.Find("H")
 	assert.NotNil(t, f1)
 	assert.Equal(t, "H(D)(MN)", f1.BracketRepresentation())
 
-	f2 := node.Find("CD")
+	f2 := bt.Find("CD")
 	assert.NotNil(t, f2)
 	assert.Equal(t, "CD(Arr(Deep child))", f2.BracketRepresentation())
 
-	f3 := node.Find("non-existing")
+	f3 := bt.Find("non-existing")
 	assert.Nil(t, f3)
 }
 
@@ -138,8 +135,7 @@ func TestNewBracketTree_Find_Existing(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			rootNode := bt.RootNode()
-			fNode := rootNode.Find(tc.name)
+			fNode := bt.Find(tc.name)
 			assert.NotNil(t, fNode)
 			assert.Equal(t, tc.expectedBracketString, fNode.BracketRepresentation())
 		})
@@ -151,12 +147,11 @@ func TestNewBracketTree_Find_NonExisting(t *testing.T) {
 	bt, err := NewBracketTree(bracketTree)
 	assert.Nil(t, err)
 
-	rootNode := bt.RootNode()
-	fNode := rootNode.Find("non-existing")
+	fNode := bt.Find("non-existing")
 	assert.Nil(t, fNode)
-	fNode = rootNode.Find("(")
+	fNode = bt.Find("(")
 	assert.Nil(t, fNode)
-	fNode = rootNode.Find(")")
+	fNode = bt.Find(")")
 	assert.Nil(t, fNode)
 }
 
@@ -167,7 +162,7 @@ func TestNewBracketTree_CountLeaves(t *testing.T) {
 			bt, err := NewBracketTree(tc.BracketTree)
 			assert.Nil(t, err)
 
-			assert.Equal(t, tc.NumLeaves, bt.RootNode().CountLeaves())
+			assert.Equal(t, tc.NumLeaves, bt.CountLeaves())
 		})
 	}
 }
@@ -177,23 +172,22 @@ func TestNewBracketTree_Add_Valid(t *testing.T) {
 	bt, err := NewBracketTree(bracketTree)
 	assert.Nil(t, err)
 
-	err = bt.RootNode().Add("(H)(K)(L)")
+	err = bt.Add("(H)(K)(L)")
 	assert.Nil(t, err)
 
 	assert.Equal(t, "H(D)(MN)(H)(K)(L)", bt.BracketRepresentation())
 }
 
 func TestNewBracketTree_Add_Invalid(t *testing.T) {
-	bracketTree := "A(B)(C)"
-	bt, err := NewBracketTree(bracketTree)
+	bt, err := NewBracketTree("A(B)(C)")
 	assert.Nil(t, err)
 
-	err = bt.RootNode().Add("s(H)(K)(L)")
+	err = bt.Add("s(H)(K)(L)")
 	assert.NotNil(t, err)
 
-	err = bt.RootNode().Add("(H)(K)(")
+	err = bt.Add("(H)(K)(")
 	assert.NotNil(t, err)
 
-	err = bt.RootNode().Add("()")
+	err = bt.Add("()")
 	assert.NotNil(t, err)
 }

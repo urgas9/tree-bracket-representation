@@ -5,29 +5,9 @@ import (
 	"strings"
 )
 
-type BracketTree struct {
-	original string
-	node     *Node
-}
-
-func NewBracketTree(treeString string) (*BracketTree, error) {
-	n, err := parseNodesFromRuneArray([]rune(treeString), 0, len(treeString))
-
-	if err != nil {
-		return nil, err
-	}
-	return &BracketTree{
-		original: treeString,
-		node:     n,
-	}, nil
-}
-
-func (b *BracketTree) RootNode() *Node {
-	return b.node
-}
-
-func (b *BracketTree) BracketRepresentation() string {
-	return b.node.BracketRepresentation()
+// NewBracketTree parses bracket tree string and return the root node object of the tree
+func NewBracketTree(treeString string) (*Node, error) {
+	return parseNodesFromRuneArray([]rune(treeString), 0, len(treeString))
 }
 
 type Node struct {
