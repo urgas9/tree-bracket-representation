@@ -1,12 +1,10 @@
 package com.github.urgas9.treebracketrepresentation;
 
-import java.util.ArrayList;
-
-public class BracketTreeBuilder {
+public class BracketTreeParser {
 
     private String bracketTree;
 
-    public BracketTreeBuilder(String bracketTree) {
+    public BracketTreeParser(String bracketTree) {
         this.bracketTree = bracketTree;
     }
 
@@ -27,16 +25,6 @@ public class BracketTreeBuilder {
             }
         }
         return -1;
-    }
-
-    static ArrayList<Node> parseChildrenNodesFromString(String bracketTree, int childTreeStartIndex, int endIndex) throws ParseException {
-        ArrayList<Node> childrenNodes = new ArrayList<>();
-        while (childTreeStartIndex < endIndex) {
-            int childTreeEndIndex = getIndexOfClosingBracket(bracketTree, childTreeStartIndex);
-            childrenNodes.add(parseTreeNodesFromString(bracketTree, childTreeStartIndex + 1, childTreeEndIndex));
-            childTreeStartIndex = childTreeEndIndex + 1;
-        }
-        return childrenNodes;
     }
 
     private static Node parseTreeNodesFromString(String bracketTree, int startIndex, int endIndex) throws ParseException {
@@ -61,10 +49,10 @@ public class BracketTreeBuilder {
             node.addChild(parseTreeNodesFromString(bracketTree, childTreeStartIndex + 1, childTreeEndIndex));
             childTreeStartIndex = childTreeEndIndex + 1;
         }
-        return new Node(sb.toString(), parseChildrenNodesFromString(bracketTree, i, endIndex));
+        return node;
     }
 
-    public Node build() throws ParseException {
-        return BracketTreeBuilder.parseTreeNodesFromString(this.bracketTree, 0, this.bracketTree.length());
+    public Node parse() throws ParseException {
+        return BracketTreeParser.parseTreeNodesFromString(this.bracketTree, 0, this.bracketTree.length());
     }
 }

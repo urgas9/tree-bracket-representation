@@ -1,4 +1,4 @@
-import com.github.urgas9.treebracketrepresentation.BracketTreeBuilder;
+import com.github.urgas9.treebracketrepresentation.BracketTreeParser;
 import com.github.urgas9.treebracketrepresentation.Node;
 import com.github.urgas9.treebracketrepresentation.ParseException;
 import com.google.gson.Gson;
@@ -52,19 +52,19 @@ public class BracketTreeTests {
     @ParameterizedTest
     @MethodSource("getValidCases")
     void validBracketTreeString(TestCase tc) throws ParseException {
-        Node n = new BracketTreeBuilder(tc.getBracketTree()).build();
+        Node n = new BracketTreeParser(tc.getBracketTree()).parse();
         assert tc.getBracketTree().equals(n.toBracketRepresentation());
     }
 
     @ParameterizedTest
     @MethodSource("getInvalidCases")
     void invalidBracketTreeString(TestCase tc) {
-        Assertions.assertThrows(ParseException.class, () -> new BracketTreeBuilder(tc.getBracketTree()).build());
+        Assertions.assertThrows(ParseException.class, () -> new BracketTreeParser(tc.getBracketTree()).parse());
     }
 
     @Test
     void findExisting() throws ParseException {
-        Node n = new BracketTreeBuilder("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))").build();
+        Node n = new BracketTreeParser("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))").parse();
         assert n.find("CD").toBracketRepresentation().equals("CD(Arr(CD))");
         assert n.find("A").toBracketRepresentation().equals("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))");
         assert n.find("E").toBracketRepresentation().equals("E(F)(G)");
@@ -73,7 +73,7 @@ public class BracketTreeTests {
 
     @Test
     void findNonExisting() throws ParseException {
-        Node n = new BracketTreeBuilder("A(B)(C)").build();
+        Node n = new BracketTreeParser("A(B)(C)").parse();
 
         assert n.find("non existing") == null;
         assert n.find("(") == null;
@@ -83,7 +83,7 @@ public class BracketTreeTests {
     @ParameterizedTest
     @MethodSource("getValidCases")
     void validBracketTreeStringCountLeaves(TestCase tc) throws ParseException {
-        Node n = new BracketTreeBuilder(tc.getBracketTree()).build();
+        Node n = new BracketTreeParser(tc.getBracketTree()).parse();
         assert n.countLeaves() == tc.getNumLeaves();
     }
 

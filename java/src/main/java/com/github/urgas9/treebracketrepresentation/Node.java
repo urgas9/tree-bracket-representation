@@ -47,7 +47,7 @@ public class Node {
         if (this.children == null) {
             this.children = new ArrayList<>();
         }
-        Node childNode = new BracketTreeBuilder(childBracketString).build();
+        Node childNode = new BracketTreeParser(childBracketString).parse();
         this.children.add(childNode);
     }
 
