@@ -188,8 +188,17 @@ func TestNewBracketTree_Add_Find_Valid(t *testing.T) {
 
 	err = c.AddChild("A(H(K))")
 	assert.Nil(t, err)
-
+	assert.Equal(t, "C(A(H(K)))", c.BracketRepresentation())
 	assert.Equal(t, "H(D(A(C(A(H(K))))))(MN)", bt.BracketRepresentation())
+
+	err = c.AddChild("B(C)(D)")
+	assert.Nil(t, err)
+	assert.Equal(t, "C(A(H(K)))(B(C)(D))", c.BracketRepresentation())
+	assert.Equal(t, "H(D(A(C(A(H(K)))(B(C)(D)))))(MN)", bt.BracketRepresentation())
+
+	err = bt.AddChild("A")
+	assert.Nil(t, err)
+	assert.Equal(t, "H(D(A(C(A(H(K)))(B(C)(D)))))(MN)(A)", bt.BracketRepresentation())
 }
 
 func TestNewBracketTree_Add_Invalid(t *testing.T) {
