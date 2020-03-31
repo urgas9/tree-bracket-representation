@@ -39,7 +39,10 @@ examples in the files used for tests across different implementations in `./exam
 
 Each language should add support for the following function:
 * object constructor: parses a bracket tree string representation to an internal object structure and stores initial bracket tree string
-* `toBracketRepresentation`: converts the internal object structure back to bracket tree string representation 
+* `find("A")`: finds the first occurrence of node with name `A` and returns object presentation of the node
+* `add("(D)(C(M))(L)")`: adds children `D`,`C` and `L` to tree node
+* `countLeaves()`: returns a number of nodes that have no children
+* `toBracketRepresentation()`: converts the internal object structure back to bracket tree string representation 
 
 For each language there should also be:
 * written **tests** that read invalid and valid test cases from JSON files
