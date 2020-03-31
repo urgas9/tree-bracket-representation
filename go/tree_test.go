@@ -172,22 +172,35 @@ func TestNewBracketTree_Add_Valid(t *testing.T) {
 	bt, err := NewBracketTree(bracketTree)
 	assert.Nil(t, err)
 
-	err = bt.Add("(H)(K)(L)")
+	err = bt.AddChild("A(H)(K)(L)")
 	assert.Nil(t, err)
 
-	assert.Equal(t, "H(D)(MN)(H)(K)(L)", bt.BracketRepresentation())
+	assert.Equal(t, "H(D)(MN)(A(H)(K)(L))", bt.BracketRepresentation())
+}
+
+func TestNewBracketTree_Add_Find_Valid(t *testing.T) {
+	bracketTree := "H(D(A(C)))(MN)"
+	bt, err := NewBracketTree(bracketTree)
+	assert.Nil(t, err)
+
+	c := bt.Find("C")
+	assert.NotNil(t, c)
+
+	err = c.AddChild("A(H(K))")
+	assert.Nil(t, err)
+
+	assert.Equal(t, "H(D(A(C(A(H(K))))))(MN)", bt.BracketRepresentation())
 }
 
 func TestNewBracketTree_Add_Invalid(t *testing.T) {
-	bt, err := NewBracketTree("A(B)(C)")
-	assert.Nil(t, err)
+	invalidTestCases := readExampleTestCases(t, exampleFilePathInvalidCases)
+	for _, tc := range invalidTestCases {
+		t.Run(tc.Name, func(t *testing.T) {
+			bt, err := NewBracketTree("A(B)(C)")
+			assert.Nil(t, err)
 
-	err = bt.Add("s(H)(K)(L)")
-	assert.NotNil(t, err)
-
-	err = bt.Add("(H)(K)(")
-	assert.NotNil(t, err)
-
-	err = bt.Add("()")
-	assert.NotNil(t, err)
+			err = bt.AddChild(tc.BracketTree)
+			assert.NotNil(t, err)
+		})
+	}
 }
