@@ -8,35 +8,26 @@ import (
 type BracketTree struct {
 	original string
 	node     *Node
-	error    error
 }
 
-func NewBracketTree(treeString string) BracketTree {
+func NewBracketTree(treeString string) (*BracketTree, error) {
 	n, err := parseNodesFromRuneArray([]rune(treeString), 0, len(treeString))
 
-	return BracketTree{
+	if err != nil {
+		return nil, err
+	}
+	return &BracketTree{
 		original: treeString,
 		node:     n,
-		error:    err,
-	}
+	}, nil
 }
 
-func (b *BracketTree) RootNode() (*Node, error) {
-	if b.error != nil {
-		return nil, b.error
-	}
-	return b.node, nil
+func (b *BracketTree) RootNode() *Node {
+	return b.node
 }
 
-func (b *BracketTree) Valid() bool {
-	return b.error == nil
-}
-
-func (b *BracketTree) BracketRepresentation() (string, error) {
-	if b.error != nil {
-		return "", b.error
-	}
-	return b.node.BracketRepresentation(), nil
+func (b *BracketTree) BracketRepresentation() string {
+	return b.node.BracketRepresentation()
 }
 
 type Node struct {
