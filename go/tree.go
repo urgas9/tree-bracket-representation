@@ -91,17 +91,7 @@ func parseTreeNodesFromRuneArray(treeRune []rune, treeStartIndex int, treeEndInd
 	}
 
 	// iterate through children and recursively call the function to parse children trees
-
-	childrenNodes, err := parseChildrenNodesFromRuneArray(treeRune, i, treeEndIndex)
-	if err != nil {
-		return nil, err
-	}
-	node.Children = childrenNodes
-	return node, nil
-}
-
-func parseChildrenNodesFromRuneArray(treeRune []rune, childTreeStartIndex int, treeEndIndex int) ([]*Node, error) {
-	var childrenNodes []*Node
+	childTreeStartIndex := i
 	for childTreeStartIndex < treeEndIndex {
 		if treeRune[childTreeStartIndex] != '(' {
 			return nil, fmt.Errorf("expected %q but got %q, failed at index %v", '(', treeRune[childTreeStartIndex], childTreeStartIndex)
@@ -114,8 +104,8 @@ func parseChildrenNodesFromRuneArray(treeRune []rune, childTreeStartIndex int, t
 		if err != nil {
 			return nil, err
 		}
-		childrenNodes = append(childrenNodes, childTree)
+		node.Children = append(node.Children, childTree)
 		childTreeStartIndex = closingBracketIndex + 1
 	}
-	return childrenNodes, nil
+	return node, nil
 }
