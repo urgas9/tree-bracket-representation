@@ -11,7 +11,8 @@ def parse(bracket_tree: str) -> Node:
 
 def _index_of_closing_bracket(bracket_tree: str, start_index: int) -> int:
     if bracket_tree[start_index] != "(":
-        raise ParseException(f"expected '(' at index '{start_index}', but got '{bracket_tree[start_index]}'")
+        raise ParseException(
+            "expected '{}' at index '{}', but got '{}'".format("(", start_index, bracket_tree[start_index]))
 
     bracket_counter = 1
     for i in range(start_index + 1, len(bracket_tree)):
@@ -32,7 +33,7 @@ def _parse_bracket_tree_string(bracket_tree: str, start_index: int, end_index: i
         children_start_index = end_index
     node_name = bracket_tree[start_index:children_start_index]
     if node_name == "":
-        raise ParseException(f"node value at index {start_index} should not be empty")
+        raise ParseException("node value at index {} should not be empty".format(start_index))
 
     n = Node(node_name)
 

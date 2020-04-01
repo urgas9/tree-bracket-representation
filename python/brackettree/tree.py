@@ -19,8 +19,8 @@ class Node:
     def bracket_representation(self) -> str:
         # avoiding string concatenation since strings are immutable object -
         # thus creating list of string and joining on return
-        s = [f"{self.name}"]
-        s.extend([f"({c.bracket_representation()})" for c in self.children])
+        s = [self.name]
+        s.extend(["({})".format(c.bracket_representation()) for c in self.children])
         return "".join(s)
 
     def count_leaves(self) -> int:
