@@ -11,7 +11,7 @@ jobs:
     name: Java
     runs-on: ubuntu-latest
     env:
-      working-directory: ./go
+      working-directory: ./java
     steps:
 
       - uses: actions/checkout@v2
