@@ -1,17 +1,19 @@
 import json
+import pathlib
 from typing import List
 
 import pytest
 from brackettree.parser import ParseException, parse
 
 
-def read_examples_file(file_path: str) -> List[dict]:
-    with open(file_path, "r") as f:
+def _read_examples_file(file_name: str) -> List[dict]:
+    p = pathlib.Path(__file__).parent.parent.parent.parent.absolute().joinpath("examples").joinpath(file_name)
+    with p.open("r") as f:
         return json.load(f)
 
 
-EXAMPLE_VALID_CASES = read_examples_file("../../../examples/bracket-tree-valid-cases.json")
-EXAMPLE_INVALID_CASES = read_examples_file("../../../examples/bracket-tree-invalid-cases.json")
+EXAMPLE_VALID_CASES = _read_examples_file("bracket-tree-valid-cases.json")
+EXAMPLE_INVALID_CASES = _read_examples_file("bracket-tree-invalid-cases.json")
 
 
 @pytest.mark.parametrize("test_case", EXAMPLE_VALID_CASES)
