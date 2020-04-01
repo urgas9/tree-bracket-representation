@@ -4,8 +4,8 @@ from typing import List, Optional
 class Node:
 
     def __init__(self, name: str) -> None:
-        self.name: str = name
-        self.children: List[Node] = []
+        self.name = name  # type: str
+        self.children = []  # type: List[Node]
 
     def find(self, name: str) -> Optional["Node"]:
         if self.name == name:
