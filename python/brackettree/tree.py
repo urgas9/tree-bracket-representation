@@ -1,5 +1,7 @@
 from typing import List, Optional
 
+from brackettree import parser
+
 
 class Node:
 
@@ -29,4 +31,4 @@ class Node:
         return sum(c.count_leaves() for c in self.children)
 
     def add_child(self, bracket_tree: str) -> None:
-        raise NotImplementedError()
+        self.children.append(parser.parse(bracket_tree))

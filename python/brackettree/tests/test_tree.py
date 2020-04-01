@@ -41,7 +41,7 @@ def test_node_count_leaves(test_case):
     ("E", "E(F)(G)"),
     ("MN", "MN"),
 ])
-def test_find_existing(name_to_find, expected_bracket_string):
+def test_node_find_existing(name_to_find, expected_bracket_string):
     bracket_tree = "A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))"
     bt = parse(bracket_tree)
 
@@ -55,9 +55,41 @@ def test_find_existing(name_to_find, expected_bracket_string):
     "(",
     ")",
 ])
-def test_find_non_existing(name_to_find):
-    bracket_tree = "H(D)(MN)"
-    bt = parse(bracket_tree)
+def test_node_find_non_existing(name_to_find):
+    bt = parse("H(D)(MN)")
 
     found = bt.find(name_to_find)
     assert found is None
+
+
+def test_node_add_valid():
+    bt = parse("H(D)(MN)")
+
+    bt.add_child("A(H)(K)(L)")
+    assert bt.bracket_representation() == "H(D)(MN)(A(H)(K)(L))"
+
+
+def test_node_add_find_valid():
+    bt = parse("H(D(A(C)))(MN)")
+    assert bt is not None
+
+    c = bt.find("C")
+    assert c is not None
+
+    c.add_child("A(H(K))")
+    assert c.bracket_representation() == "C(A(H(K)))"
+    assert bt.bracket_representation() == "H(D(A(C(A(H(K))))))(MN)"
+
+    c.add_child("B(C)(D)")
+    assert c.bracket_representation() == "C(A(H(K)))(B(C)(D))"
+    assert bt.bracket_representation() == "H(D(A(C(A(H(K)))(B(C)(D)))))(MN)"
+
+    bt.add_child("A")
+    assert bt.bracket_representation() == "H(D(A(C(A(H(K)))(B(C)(D)))))(MN)(A)"
+
+
+@pytest.mark.parametrize("test_case", EXAMPLE_INVALID_CASES)
+def test_node_add_invalid(test_case):
+    bt = parse("H(D)(MN)")
+    with pytest.raises(ParseException):
+        bt.add_child(test_case["bracketTree"])
