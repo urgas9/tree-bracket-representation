@@ -85,14 +85,14 @@ jobs:
       - name: Lint (flake8)
         working-directory: ${{env.working-directory}}
         run: |
-          flake8 . --count --statistics
+          make lint
 
       - name: Type hints (mypy)
         working-directory: ${{env.working-directory}}
         run: |
-          mypy brackettree
+          make type-hint
 
       - name: Test (pytest)
         working-directory: ${{env.working-directory}}
         run: |
-          pytest
+          make test

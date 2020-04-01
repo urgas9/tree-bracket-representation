@@ -18,10 +18,10 @@ setup(
     ],
     extras_require={
         "tests": [
-            "pytest",
-            "mypy",
-            "flake8",
-            "flake8-quotes"
+            "pytest==5.4.1",
+            "mypy==0.770",
+            "flake8==3.7.9",
+            "flake8-quotes==3.0.0"
         ],
     },
     include_package_data=True,
