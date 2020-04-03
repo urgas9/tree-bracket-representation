@@ -9,8 +9,22 @@ repositories {
     mavenCentral()
 }
 
+def jUnitVersion = "5.6.0"
+
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    // testing dependencies:
+    // needed for all the basic junit stuff - like @Test annotation
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${jUnitVersion}")
+    // needed for test execution - without this you will not be able to execute the test
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}")
+    // needed for parametrized tests
+    testCompile("org.junit.jupiter:junit-jupiter-params:${jUnitVersion}")
+}
+
+test {
+    useJUnitPlatform()
 }
 
 compileKotlin {
