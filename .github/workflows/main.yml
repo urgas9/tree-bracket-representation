@@ -115,5 +115,5 @@ jobs:
 
       - name: ktlint
         working-directory: ${{env.working-directory}}
-        run: ./gradlew ktlint
+        run: ./gradlew ktlintCheck
 
