@@ -63,8 +63,8 @@ class BracketTreeTest {
     fun `node find valid names`(name: String, expectedBracketTree: String) {
         val bt = BracketTreeParser.parse("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))")
         val r = bt.find(name)
-        assertNotNull(r!!)
-        assertEquals(expectedBracketTree, r.toBracketRepresentation())
+        assertNotNull(r)
+        assertEquals(expectedBracketTree, r!!.toBracketRepresentation())
     }
 
     private fun getInvalidCasesForFind(): Stream<String> = Arrays.stream(arrayOf("non-existing", "(", ")"))
@@ -89,9 +89,9 @@ class BracketTreeTest {
         assertNotNull(bt)
 
         val c = bt.find("C")
-        assertNotNull(c!!)
+        assertNotNull(c)
 
-        c.addChild("A(H(K))")
+        c!!.addChild("A(H(K))")
         assertEquals("C(A(H(K)))", c.toBracketRepresentation())
         assertEquals("H(D(A(C(A(H(K))))))(MN)", bt.toBracketRepresentation())
 
