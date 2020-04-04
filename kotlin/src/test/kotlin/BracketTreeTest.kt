@@ -10,7 +10,6 @@ import java.io.FileReader
 import java.util.*
 import java.util.stream.Stream
 
-
 const val VALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-valid-cases.json"
 const val INVALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-invalid-cases.json"
 
@@ -113,5 +112,4 @@ class BracketTreeTest {
             bt.addChild(testcase.bracketTree)
         }
     }
-
 }

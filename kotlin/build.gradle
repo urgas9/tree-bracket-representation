@@ -32,7 +32,6 @@ test {
 
 ktlint {
     // config for ktlint plugin
-    debug = true
     verbose = true
     android = false
     outputToConsole = true
