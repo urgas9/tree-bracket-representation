@@ -15,7 +15,14 @@ data class Node(
     }
 
     fun countLeaves(): Int {
-        throw NotImplementedError()
+        if (this.children.isNullOrEmpty()) {
+            return 1
+        }
+        var leaves = 0
+        for (c in this.children!!.listIterator()) {
+            leaves += c.countLeaves()
+        }
+        return leaves
     }
 
     fun find(name: String): Node {
