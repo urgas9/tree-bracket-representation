@@ -109,11 +109,11 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Build with Gradle
+      - name: Test (JUnit 5)
         working-directory: ${{env.working-directory}}
         run: ./gradlew test
 
-      - name: ktlint
+      - name: Lint (ktlint)
         working-directory: ${{env.working-directory}}
         run: ./gradlew ktlintCheck
 
