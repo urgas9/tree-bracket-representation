@@ -120,6 +120,8 @@ jobs:
   test-rust:
     name: Rust
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./rust
     steps:
       - uses: actions/checkout@v2
       - name: Install Rust
