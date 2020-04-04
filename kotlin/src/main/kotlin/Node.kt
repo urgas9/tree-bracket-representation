@@ -50,5 +50,4 @@ data class Node(
         }
         return sb.toString()
     }
-
 }
