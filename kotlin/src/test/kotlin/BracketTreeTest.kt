@@ -64,7 +64,7 @@ class BracketTreeTest {
     fun `node find valid names`(name: String, expectedBracketTree: String) {
         val bt = BracketTreeParser.parse("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))")
         val r = bt.find(name)
-        assertNotNull(r)
+        assertNotNull(r!!)
         assertEquals(expectedBracketTree, r.toBracketRepresentation())
     }
 
@@ -90,11 +90,11 @@ class BracketTreeTest {
         assertNotNull(bt)
 
         val c = bt.find("C")
-        assertNotNull(c)
+        assertNotNull(c!!)
 
         c.addChild("A(H(K))")
         assertEquals("C(A(H(K)))", c.toBracketRepresentation())
-        assertEquals("H(D(A(C(A(H(K))))))(MN)", c.toBracketRepresentation())
+        assertEquals("H(D(A(C(A(H(K))))))(MN)", bt.toBracketRepresentation())
 
         c.addChild("B(C)(D)")
         assertEquals("C(A(H(K)))(B(C)(D))", c.toBracketRepresentation())

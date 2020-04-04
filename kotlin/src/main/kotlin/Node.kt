@@ -3,7 +3,8 @@ data class Node(
     var children: ArrayList<Node>?
 ) {
     fun addChild(childTree: String) {
-        throw NotImplementedError()
+        val c = BracketTreeParser.parse(childTree)
+        this.addChild(c)
     }
 
     fun addChild(childNode: Node) {
@@ -25,8 +26,19 @@ data class Node(
         return leaves
     }
 
-    fun find(name: String): Node {
-        throw NotImplementedError()
+    fun find(name: String): Node? {
+        if (this.name == name) {
+            return this
+        }
+        if (!this.children.isNullOrEmpty()) {
+            for (c in this.children!!.listIterator()) {
+                val h = c.find(name)
+                if (h != null) {
+                    return h
+                }
+            }
+        }
+        return null
     }
 
     fun toBracketRepresentation(): String {
