@@ -1,9 +1,17 @@
 data class Node(
-    val name: String,
-    val children: List<Node>?
+    var name: String,
+    var children: ArrayList<Node>?
 ) {
     fun addChild(childTree: String) {
         throw NotImplementedError()
+    }
+
+    fun addChild(childNode: Node) {
+        if (this.children == null) {
+            this.children = arrayListOf(childNode)
+        } else {
+            this.children!!.add(childNode)
+        }
     }
 
     fun countLeaves(): Int {
@@ -15,7 +23,13 @@ data class Node(
     }
 
     fun toBracketRepresentation(): String {
-        throw NotImplementedError()
+        val sb = StringBuilder(this.name)
+        if (this.children != null) {
+            for (c in this.children!!) {
+                sb.append("(${c.toBracketRepresentation()})")
+            }
+        }
+        return sb.toString()
     }
 
 }

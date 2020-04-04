@@ -32,7 +32,7 @@ class BracketTreeTest {
 
     @ParameterizedTest
     @MethodSource("getValidCases")
-    fun `init bracket tree with valid string()`(testcase: TestCase) {
+    fun `init bracket tree with valid string`(testcase: TestCase) {
         val bt = BracketTreeParser.parse(testcase.bracketTree)
         assertEquals(testcase.bracketTree, bt.toBracketRepresentation())
     }
