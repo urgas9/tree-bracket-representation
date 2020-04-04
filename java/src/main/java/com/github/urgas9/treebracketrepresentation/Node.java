@@ -44,11 +44,8 @@ public class Node {
     }
 
     public void addChild(String childBracketString) throws ParseException {
-        if (this.children == null) {
-            this.children = new ArrayList<>();
-        }
-        Node childNode = new BracketTreeParser(childBracketString).parse();
-        this.children.add(childNode);
+        Node c = new BracketTreeParser(childBracketString).parse();
+        this.addChild(c);
     }
 
     public void addChild(Node child) {

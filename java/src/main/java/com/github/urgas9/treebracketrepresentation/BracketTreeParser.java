@@ -14,11 +14,13 @@ public class BracketTreeParser {
         }
         int bracketsCount = 1;
         for (int i = startIndex + 1; i < bracketTree.length(); i++) {
-            if (bracketTree.charAt(i) == '(') {
-                bracketsCount++;
-            }
-            if (bracketTree.charAt(i) == ')') {
-                bracketsCount--;
+            switch (bracketTree.charAt(i)) {
+                case '(':
+                    bracketsCount++;
+                    break;
+                case ')':
+                    bracketsCount--;
+                    break;
             }
             if (bracketsCount == 0) {
                 return i;

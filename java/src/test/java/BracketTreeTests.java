@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BracketTreeTests {
 
-    private final String VALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-valid-cases.json";
-    private final String INVALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-invalid-cases.json";
+    private static final String VALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-valid-cases.json";
+    private static final String INVALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-invalid-cases.json";
 
     private TestCase[] validStringTestCases;
     private TestCase[] invalidStringTestCases;
@@ -30,14 +30,14 @@ public class BracketTreeTests {
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
         //read file and convert the JSON string back to object using GSON deserializer
-        System.out.println("Reading valid test cases from '" + this.VALID_EXAMPLES_FILEPATH + "'");
+        System.out.println("Reading valid test cases from '" + VALID_EXAMPLES_FILEPATH + "'");
         BufferedReader brValid = new BufferedReader(
-                new FileReader(this.VALID_EXAMPLES_FILEPATH));
+                new FileReader(VALID_EXAMPLES_FILEPATH));
         this.validStringTestCases = gson.fromJson(brValid, TestCase[].class);
 
-        System.out.println("Reading valid test cases from '" + this.INVALID_EXAMPLES_FILEPATH + "'");
+        System.out.println("Reading valid test cases from '" + INVALID_EXAMPLES_FILEPATH + "'");
         BufferedReader brInvalid = new BufferedReader(
-                new FileReader(this.INVALID_EXAMPLES_FILEPATH));
+                new FileReader(INVALID_EXAMPLES_FILEPATH));
         this.invalidStringTestCases = gson.fromJson(brInvalid, TestCase[].class);
     }
 
