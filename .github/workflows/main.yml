@@ -109,11 +109,30 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Test (JUnit 5)
-        working-directory: ${{env.working-directory}}
-        run: ./gradlew test
-
       - name: Lint (ktlint)
         working-directory: ${{env.working-directory}}
         run: ./gradlew ktlintCheck
 
+      - name: Test (JUnit 5)
+        working-directory: ${{env.working-directory}}
+        run: ./gradlew test
+
+  test-rust:
+    name: Rust
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: clippy
+
+      - name: Lint (clippy)
+        working-directory: ${{env.working-directory}}
+        run: cargo clippy
+
+      - name: Test
+        working-directory: ${{env.working-directory}}
+        run: cargo test
