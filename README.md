@@ -16,10 +16,10 @@ but bare in mind that this library supports reading and writing of general trees
 For example, the below tree:
 
             A
-      /     |      \
-    CD      E       I
+        /   |   \
+      CD    E    I
            / \
-           F  G
+          F   G
 
 could simply be presented as:
 
@@ -49,11 +49,7 @@ For each language there should also be:
 stored in [`./examples`](./examples) folder. 
 * a **linting tool** to be added to check for code style.
 * the execution of tests and lint tool should be included in [GitHub Actions workflow file](./.github/workflows/main.yml).
+* written README.md file with status and example usage
 
-## Example usage in Go
-
-    // Create a new tree from string
-    bt := NewBracketTree("A(B)(C)")
-    
-    // Write the tree to a bracket representation
-    out, err := bt.BracketRepresentation()
+## How to use?
+Check each for a README file in each language's folder.

@@ -63,7 +63,7 @@ jobs:
         run: make test
 
   test-python:
-    name: Python 3.5+
+    name: Python 3.5
     runs-on: ubuntu-latest
     env:
       working-directory: ./python
