@@ -133,8 +133,8 @@ jobs:
 
       - name: Lint (clippy)
         working-directory: ${{env.working-directory}}
-        run: cargo clippy
+        run: make lint
 
       - name: Test
         working-directory: ${{env.working-directory}}
-        run: cargo test
+        run: make test
