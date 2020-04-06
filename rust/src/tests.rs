@@ -9,7 +9,8 @@ fn valid_tree_to_bracket_string() {
 }
 
 #[test]
-fn another() {
-    assert_eq!(1 + 3, 4);
-    //panic!("Make this test fail");
+fn valid_bracket_tree_strings() {
+    let bracket_tree_string = "A(B)(C)(D(E(F)))(HAHA)";
+    let n = tree::parse(bracket_tree_string).unwrap();
+    assert_eq!(n.to_bracket_string(), bracket_tree_string)
 }
