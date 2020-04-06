@@ -1,4 +1,3 @@
-use std::error;
 use std::fmt;
 
 pub struct Node {
@@ -64,7 +63,7 @@ pub fn parse(bracket_tree: &str) -> Result<Node, ParseError> {
     return parse_bracket_string_to_node(&a, 0, bracket_tree.len());
 }
 
-fn get_closing_bracket_index(bracket_tree: &Vec<char>, start_index: usize) -> Result<usize, ParseError> {
+fn get_closing_bracket_index(bracket_tree: &[char], start_index: usize) -> Result<usize, ParseError> {
     if bracket_tree[start_index] != '(' {
         return Err(ParseError { message: String::from(format!("expected '{}' but found '{}' at index {}", "(", bracket_tree[start_index], start_index)) });
     }
@@ -81,15 +80,13 @@ fn get_closing_bracket_index(bracket_tree: &Vec<char>, start_index: usize) -> Re
         }
     }
 
-    return Err(ParseError { message: String::from("reached the end of string and could not find the matching closing bracket") });
+    Err(ParseError { message: String::from("reached the end of string and could not find the matching closing bracket") })
 }
 
 fn parse_bracket_string_to_node(bracket_tree: &Vec<char>, start_index: usize, end_index: usize) -> Result<Node, ParseError> {
     let mut name = String::new();
     let mut child_start_index = start_index;
-    while child_start_index < end_index &&
-    let c = bracket_tree[child_start_index] != '('
-    {
+    while child_start_index < end_index && bracket_tree[child_start_index] != '(' {
         name.push(bracket_tree[child_start_index]);
         child_start_index += 1;
     }
@@ -105,5 +102,5 @@ fn parse_bracket_string_to_node(bracket_tree: &Vec<char>, start_index: usize, en
         child_start_index = child_end_index + 1;
     }
 
-    return Ok(Node { name, children });
+    Ok(Node { name, children })
 }
