@@ -11,7 +11,7 @@ impl Node {
     }
 
     pub fn add_child(&mut self, child_string: String) -> Result<Node, ParseError> {
-        return Err(ParseError { message: String::from("not implemented") });
+        Err(ParseError { message: String::from("not implemented") })
     }
 
     pub fn count_leaves(&self) -> i32 {
@@ -22,11 +22,11 @@ impl Node {
         for c in &self.children {
             sum += c.count_leaves();
         }
-        return sum;
+        sum
     }
 
     pub fn find(&self, name: String) -> Result<Node, ParseError> {
-        return Err(ParseError { message: String::from("not implemented") });
+        Err(ParseError { message: String::from("not implemented") })
     }
 
     pub fn to_bracket_string(&self) -> String {
@@ -36,7 +36,7 @@ impl Node {
             bracket_string.push_str(&c.to_bracket_string());
             bracket_string.push_str(")");
         }
-        return bracket_string;
+        bracket_string
     }
 }
 
@@ -66,18 +66,18 @@ pub fn print_result(result: Result<Node, ParseError>) {
 }
 
 pub fn parse(bracket_tree: &str) -> Result<Node, ParseError> {
-    let a = bracket_tree.chars().collect();
-    return parse_bracket_string_to_node(&a, 0, bracket_tree.len());
+    let char_vec: Vec<char> = bracket_tree.chars().collect();
+    parse_bracket_string_to_node(&char_vec, 0, bracket_tree.len())
 }
 
 fn get_closing_bracket_index(bracket_tree: &[char], start_index: usize) -> Result<usize, ParseError> {
     if bracket_tree[start_index] != '(' {
-        return Err(ParseError { message: String::from(format!("expected '{}' but found '{}' at index {}", "(", bracket_tree[start_index], start_index)) });
+        return Err(ParseError { message: format!("expected '{}' but found '{}' at index {}", "(", bracket_tree[start_index], start_index) });
     }
 
     let mut bracket_counter = 1;
-    for i in start_index + 1..bracket_tree.len() {
-        match bracket_tree[i] {
+    for (i, ch) in bracket_tree.iter().enumerate().skip(start_index + 1) {
+        match ch {
             '(' => bracket_counter += 1,
             ')' => bracket_counter -= 1,
             _ => {}
@@ -90,7 +90,7 @@ fn get_closing_bracket_index(bracket_tree: &[char], start_index: usize) -> Resul
     Err(ParseError { message: String::from("reached the end of string and could not find the matching closing bracket") })
 }
 
-fn parse_bracket_string_to_node(bracket_tree: &Vec<char>, start_index: usize, end_index: usize) -> Result<Node, ParseError> {
+fn parse_bracket_string_to_node(bracket_tree: &[char], start_index: usize, end_index: usize) -> Result<Node, ParseError> {
     let mut name = String::new();
     let mut child_start_index = start_index;
     while child_start_index < end_index && bracket_tree[child_start_index] != '(' {
@@ -98,7 +98,7 @@ fn parse_bracket_string_to_node(bracket_tree: &Vec<char>, start_index: usize, en
         child_start_index += 1;
     }
     if name.is_empty() {
-        return Err(ParseError { message: String::from(format!("node name of the tree starting at index {} is empty", start_index)) });
+        return Err(ParseError { message: format!("node name of the tree starting at index {} is empty", start_index) });
     }
 
     let mut children = vec![];
