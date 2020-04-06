@@ -15,7 +15,14 @@ impl Node {
     }
 
     pub fn count_leaves(&self) -> i32 {
-        return -1;
+        if self.children.is_empty() {
+            return 1;
+        }
+        let mut sum: i32 = 0;
+        for c in &self.children {
+            sum += c.count_leaves();
+        }
+        return sum;
     }
 
     pub fn find(&self, name: String) -> Result<Node, ParseError> {

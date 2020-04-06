@@ -46,3 +46,12 @@ fn invalid_bracket_tree_strings() {
         assert!(result.is_err());
     }
 }
+
+#[test]
+fn count_leaves_valid_bracket_tree_strings() {
+    let test_cases = read_examples_file("bracket-tree-valid-cases.json");
+    for tc in test_cases {
+        let n = tree::parse(tc.bracket_tree.as_str()).unwrap();
+        assert_eq!(n.count_leaves(), tc.num_leaves.unwrap())
+    }
+}
