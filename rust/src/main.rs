@@ -9,5 +9,5 @@ fn main() {
     // print!("{}", e)
 
     let a = tree::parse("s(sd)");
-    tree::print_result(a);
+    println!("{:?}", a)
 }

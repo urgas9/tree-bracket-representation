@@ -55,3 +55,37 @@ fn count_leaves_valid_bracket_tree_strings() {
         assert_eq!(n.count_leaves(), tc.num_leaves.unwrap())
     }
 }
+
+#[test]
+fn find_existing_node() {
+    let test_cases: Vec<(&str, &str)> = vec![
+        ("CD", "CD(Arr(CD))"),
+        ("A", "A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))"),
+        ("E", "E(F)(G)"),
+        ("MN", "MN")
+    ];
+
+    let bt = tree::parse("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))").unwrap();
+    for tc in test_cases {
+        let found = bt.find(tc.0).unwrap();
+        assert!(found.is_some());
+        assert_eq!(found.unwrap().to_bracket_string(), tc.1)
+    }
+}
+
+#[test]
+fn find_non_existing_node() {
+    let test_cases: Vec<&str> = vec![
+        "non-existing",
+        "(",
+        ")",
+        "ll"
+    ];
+
+    let bt = tree::parse("H(D)(MN)").unwrap();
+    for tc in test_cases {
+        let found = bt.find(tc).unwrap();
+        assert!(found.is_none());
+    }
+}
+

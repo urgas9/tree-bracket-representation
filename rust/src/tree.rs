@@ -1,5 +1,6 @@
 use std::fmt;
 
+#[derive(Debug)]
 pub struct Node {
     pub name: String,
     pub children: Vec<Node>,
@@ -25,8 +26,17 @@ impl Node {
         sum
     }
 
-    pub fn find(&self, name: String) -> Result<Node, ParseError> {
-        Err(ParseError { message: String::from("not implemented") })
+    pub fn find(&self, name: &str) -> Result<Option<&Node>, ParseError> {
+        if self.name == name {
+            return Ok(Some(self));
+        }
+        for c in &self.children {
+            let k = c.find(name)?;
+            if k.is_some() {
+                return Ok(k);
+            }
+        }
+        Ok(None)
     }
 
     pub fn to_bracket_string(&self) -> String {
@@ -40,12 +50,6 @@ impl Node {
     }
 }
 
-impl fmt::Display for Node {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Node[name: {}, children_num: {}]", self.name, self.children.len())
-    }
-}
-
 
 #[derive(Debug, Clone)]
 pub struct ParseError {
@@ -55,13 +59,6 @@ pub struct ParseError {
 impl fmt::Display for ParseError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "Parse Error: {}", self.message)
-    }
-}
-
-pub fn print_result(result: Result<Node, ParseError>) {
-    match result {
-        Ok(n) => println!("result: {}", n.to_bracket_string()),
-        Err(e) => println!("err: {:?}", e),
     }
 }
 
