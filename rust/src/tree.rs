@@ -39,11 +39,11 @@ impl Node {
         Ok(None)
     }
 
-    pub fn to_bracket_string(&self) -> String {
+    pub fn to_bracket_representation(&self) -> String {
         let mut bracket_string = self.name.to_string();
         for c in &self.children {
             bracket_string.push_str("(");
-            bracket_string.push_str(&c.to_bracket_string());
+            bracket_string.push_str(&c.to_bracket_representation());
             bracket_string.push_str(")");
         }
         bracket_string
