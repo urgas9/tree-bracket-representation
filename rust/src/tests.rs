@@ -33,7 +33,7 @@ fn valid_tree_to_bracket_string() {
 fn valid_bracket_tree_strings() {
     let test_cases = read_examples_file("bracket-tree-valid-cases.json");
     for tc in test_cases {
-        let n = tree::parse(tc.bracket_tree.as_str()).unwrap();
+        let mut n = tree::parse(tc.bracket_tree.as_str()).unwrap();
         assert_eq!(n.to_bracket_representation(), tc.bracket_tree.as_str())
     }
 }
@@ -65,7 +65,7 @@ fn find_existing_node() {
         ("MN", "MN")
     ];
 
-    let bt = tree::parse("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))").unwrap();
+    let mut bt = tree::parse("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))").unwrap();
     for tc in test_cases {
         let found = bt.find(tc.0).unwrap();
         assert!(found.is_some());
@@ -82,10 +82,45 @@ fn find_non_existing_node() {
         "ll"
     ];
 
-    let bt = tree::parse("H(D)(MN)").unwrap();
+    let mut bt = tree::parse("H(D)(MN)").unwrap();
     for tc in test_cases {
         let found = bt.find(tc).unwrap();
         assert!(found.is_none());
     }
 }
 
+#[test]
+fn add_valid_child() {
+    let mut bt = tree::parse("H(D)(MN)").unwrap();
+
+    bt.add_child("A(H)(K)(L)");
+    assert_eq!(bt.to_bracket_representation(), "H(D)(MN)(A(H)(K)(L))")
+}
+
+#[test]
+fn add_child_find_valid() {
+    let mut bt = &mut tree::parse("H(D(A(C)))(MN)").unwrap();
+
+    let ch = bt.find("C").unwrap().unwrap();
+    ch.add_child("A(H(K))");
+    assert_eq!(ch.to_bracket_representation(), "C(A(H(K)))");
+    assert_eq!(bt.to_bracket_representation(), "H(D(A(C(A(H(K))))))(MN)");
+
+    // TODO: solve error[E0499]: cannot borrow `*bt` as mutable more than once at a time
+    // ch.add_child("B(C)(D)").unwrap();
+    // assert_eq!(ch.to_bracket_representation(), "C(A(H(K)))(B(C)(D))");
+    // assert_eq!(bt.to_bracket_representation(), "H(D(A(C(A(H(K)))(B(C)(D)))))(MN)");
+    //
+    // ch.add_child("A").unwrap();
+    // assert_eq!(bt.to_bracket_representation(), "H(D(A(C(A(H(K)))(B(C)(D)))))(MN)(A)")
+}
+
+#[test]
+fn add_child_invalid() {
+    let test_cases = read_examples_file("bracket-tree-invalid-cases.json");
+    let mut bt = tree::parse("H(D(A(C)))(MN)").unwrap();
+    for tc in test_cases {
+        let result = bt.add_child(tc.bracket_tree.as_str());
+        assert!(result.is_err())
+    }
+}

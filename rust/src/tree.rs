@@ -7,12 +7,14 @@ pub struct Node {
 }
 
 impl Node {
-    pub(crate) fn add_child_node(&mut self, child: Node) {
+    pub fn add_child_node(&mut self, child: Node) {
         self.children.push(child);
     }
 
-    pub fn add_child(&mut self, child_string: String) -> Result<Node, ParseError> {
-        Err(ParseError { message: String::from("not implemented") })
+    pub fn add_child(&mut self, child_string: &str) -> Result<(), ParseError> {
+        let child = parse(child_string)?;
+        self.add_child_node(child);
+        Ok(())
     }
 
     pub fn count_leaves(&self) -> i32 {
@@ -26,11 +28,11 @@ impl Node {
         sum
     }
 
-    pub fn find(&self, name: &str) -> Result<Option<&Node>, ParseError> {
+    pub fn find(&mut self, name: &str) -> Result<Option<&mut Node>, ParseError> {
         if self.name == name {
             return Ok(Some(self));
         }
-        for c in &self.children {
+        for c in &mut self.children {
             let k = c.find(name)?;
             if k.is_some() {
                 return Ok(k);
@@ -39,9 +41,9 @@ impl Node {
         Ok(None)
     }
 
-    pub fn to_bracket_representation(&self) -> String {
+    pub fn to_bracket_representation(&mut self) -> String {
         let mut bracket_string = self.name.to_string();
-        for c in &self.children {
+        for c in &mut self.children {
             bracket_string.push_str("(");
             bracket_string.push_str(&c.to_bracket_representation());
             bracket_string.push_str(")");
