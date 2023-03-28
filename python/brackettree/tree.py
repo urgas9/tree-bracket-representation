@@ -1,4 +1,4 @@
-from typing import Self, List, Optional
+from typing import List, Optional
 
 from brackettree import parser
 
@@ -6,7 +6,7 @@ from brackettree import parser
 class Node:
 
     name: str
-    children: List[Self]
+    children: List["Node"]
 
     def __init__(self, name: str) -> None:
         self.name = name
