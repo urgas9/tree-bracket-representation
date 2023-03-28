@@ -1,13 +1,16 @@
-from typing import List, Optional
+from typing import Self, List, Optional
 
 from brackettree import parser
 
 
 class Node:
 
+    name: str
+    children: List[Self]
+
     def __init__(self, name: str) -> None:
-        self.name = name  # type: str
-        self.children = []  # type: List[Node]
+        self.name = name
+        self.children = []
 
     def find(self, name: str) -> Optional["Node"]:
         if self.name == name:

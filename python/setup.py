@@ -5,7 +5,7 @@ setup(
     author="urgas9",
     version="0.0.1",
     long_description="Bracket Tree parser",
-    python_requires=">=3.11",
+    python_requires=">=3.5",
     packages=find_packages(
         include=[
             "brackettree",
