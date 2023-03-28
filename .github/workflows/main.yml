@@ -43,16 +43,7 @@ jobs:
           go-version: 1.20
 
       - name: Get dependencies
-        run: |
-          pwd
-          go env GOPATH
-          export GOPATH=$(go env GOPATH)
-          export GOBIN=$GOPATH/bin
-          echo "home - $HOME"
-          echo "path - $GOPATH"
-          echo "bin - $GOBIN"
-          echo "root - $GOROOT"
-          go get -v ./...
+        run: go get .
 
       - name: Install golangci-lint
         run: curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.52.2
