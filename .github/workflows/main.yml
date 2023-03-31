@@ -4,7 +4,6 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
 
 jobs:
   test-java:
@@ -31,8 +30,9 @@ jobs:
   test-go:
     name: Go
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./go
+    defaults:
+      run:
+        working-directory: ./go
     steps:
 
       - name: Check out code into the Go module directory
@@ -41,27 +41,18 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version-file: go.mod
+          go-version: 1.19
 
-      - name: Get dependencies
-        run: |
-          go env GOPATH
-          echo "home - $HOME"
-          echo "path - $GOPATH"
-          echo "bin - $GOBIN"
-          echo "root - $GOROOT"
-          export GOPATH=$(go env GOPATH)/bin
-          go get -v -t -d ./...
+      - name: Install dependencies
+        run: go get ./...
 
       - name: Install golangci-lint
-        run: curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.52.2
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.52.2
 
       - name: Lint
-        working-directory: ${{env.working-directory}}
         run: $(go env GOPATH)/bin/golangci-lint run ./...
 
       - name: Tests
-        working-directory: ${{env.working-directory}}
         run: make test
 
   test-python:

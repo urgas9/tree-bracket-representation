@@ -2,7 +2,7 @@ package brackettree
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"os"
 	"testing"
 
@@ -28,7 +28,7 @@ func readExampleTestCases(t *testing.T, filePath string) []TestCase {
 	require.Nil(t, err)
 	defer jsonFile.Close()
 
-	byteJSON, err := ioutil.ReadAll(jsonFile)
+	byteJSON, err := io.ReadAll(jsonFile)
 	require.Nil(t, err)
 
 	var treeObj []TestCase
