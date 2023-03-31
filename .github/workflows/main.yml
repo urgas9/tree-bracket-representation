@@ -51,7 +51,7 @@ jobs:
 
       - name: Lint
         working-directory: ${{env.working-directory}}
-        run: $(go env GOPATH)/bin/golangci-lint run ./...
+        run: golangci-lint run ./...
 
       - name: Tests
         working-directory: ${{env.working-directory}}
