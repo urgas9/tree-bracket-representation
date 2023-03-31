@@ -1,6 +1,6 @@
 module github.com/urgas9/tree-bracket-representation/go
 
-go 1.20
+go 1.19
 
 require github.com/stretchr/testify v1.7.0
 
