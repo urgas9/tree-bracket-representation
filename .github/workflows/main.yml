@@ -9,8 +9,9 @@ jobs:
   test-java:
     name: Java
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./java
+    defaults:
+      run:
+        working-directory: ./java
     steps:
 
       - uses: actions/checkout@v3
@@ -20,11 +21,9 @@ jobs:
           java-version: 1.8
 
       - name: Lint
-        working-directory: ${{env.working-directory}}
         run: mvn spotbugs:check
 
       - name: Test
-        working-directory: ${{env.working-directory}}
         run: mvn test
 
   test-go:
@@ -58,8 +57,9 @@ jobs:
   test-python:
     name: Python 3.11
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./python
+    defaults:
+      run:
+        working-directory: ./python
 
     steps:
       - uses: actions/checkout@v3
@@ -69,31 +69,28 @@ jobs:
           python-version: 3.11
 
       - name: Install dependencies
-        working-directory: ${{env.working-directory}}
         run: |
           python -m pip install --upgrade pip
           pip install .[tests]
 
       - name: Lint (flake8)
-        working-directory: ${{env.working-directory}}
         run: |
           make lint
 
       - name: Type hints (mypy)
-        working-directory: ${{env.working-directory}}
         run: |
           make type-hint
 
       - name: Test (pytest)
-        working-directory: ${{env.working-directory}}
         run: |
           make test
 
   test-kotlin:
     name: Kotlin
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./kotlin
+    defaults:
+      run:
+        working-directory: ./kotlin
 
     steps:
       - uses: actions/checkout@v3
@@ -103,18 +100,17 @@ jobs:
           java-version: 1.8
 
       - name: Lint (ktlint)
-        working-directory: ${{env.working-directory}}
         run: ./gradlew ktlintCheck
 
       - name: Test (JUnit 5)
-        working-directory: ${{env.working-directory}}
         run: ./gradlew test
 
   test-rust:
     name: Rust
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./rust
+    defaults:
+      run:
+        working-directory: ./rust
     steps:
       - uses: actions/checkout@v3
       - name: Install Rust
@@ -125,9 +121,7 @@ jobs:
           components: clippy
 
       - name: Lint (clippy)
-        working-directory: ${{env.working-directory}}
         run: make lint
 
       - name: Test
-        working-directory: ${{env.working-directory}}
         run: make test
