@@ -1,5 +1,7 @@
 import com.google.gson.Gson
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -7,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.io.FileReader
-import java.util.*
+import java.util.Arrays
 import java.util.stream.Stream
 
 const val VALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-valid-cases.json"
