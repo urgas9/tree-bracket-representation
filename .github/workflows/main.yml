@@ -15,12 +15,12 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3
-      - name: Set up JDK 1.8
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
             distribution: 'zulu'
-            java-version: '11'
-            java-package: jdk
+            java-version: '20'
+            java-package: 'jdk'
 
       - name: Lint
         run: mvn spotbugs:check
@@ -96,17 +96,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 1.8
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '11'
+          java-version: '20'
           java-package: 'jdk'
 
       - name: Lint (ktlint)
         run: ./gradlew ktlintCheck
 
-      - name: Test (JUnit 5)
+      - name: Test (JUnit)
         run: ./gradlew test
 
   test-rust:
