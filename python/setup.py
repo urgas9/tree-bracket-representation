@@ -18,7 +18,7 @@ setup(
     ],
     extras_require={
         "tests": [
-            "pytest==8.1.1",
+            "pytest==8.1.2",
             "mypy==1.10.0",
             "flake8==7.0.0",
             "flake8-quotes==3.4.0"
