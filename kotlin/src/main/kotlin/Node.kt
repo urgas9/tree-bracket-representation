@@ -1,6 +1,6 @@
 data class Node(
     var name: String,
-    var children: ArrayList<Node>?
+    var children: ArrayList<Node>?,
 ) {
     fun addChild(childTree: String) {
         val c = BracketTreeParser.parse(childTree)
