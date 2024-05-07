@@ -18,7 +18,6 @@ const val INVALID_EXAMPLES_FILEPATH = "../examples/bracket-tree-invalid-cases.js
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class BracketTreeTest {
-
     private var validStringTestCases: Array<TestCase>? = null
     private var invalidStringTestCases: Array<TestCase>? = null
 
@@ -30,6 +29,7 @@ class BracketTreeTest {
     }
 
     private fun getValidCases(): Stream<TestCase> = Arrays.stream(this.validStringTestCases)
+
     private fun getInvalidCases(): Stream<TestCase> = Arrays.stream(this.invalidStringTestCases)
 
     @ParameterizedTest
@@ -58,12 +58,15 @@ class BracketTreeTest {
             Arguments.of("CD", "CD(Arr(CD))"),
             Arguments.of("A", "A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))"),
             Arguments.of("E", "E(F)(G)"),
-            Arguments.of("MN", "MN")
+            Arguments.of("MN", "MN"),
         )
 
     @ParameterizedTest
     @MethodSource("getValidCasesForFind")
-    fun `node find valid names`(name: String, expectedBracketTree: String) {
+    fun `node find valid names`(
+        name: String,
+        expectedBracketTree: String,
+    ) {
         val bt = BracketTreeParser.parse("A(CD(Arr(CD)))(E(F)(G))(CD)(H(D)(MN))")
         val r = bt.find(name)
         assertNotNull(r)

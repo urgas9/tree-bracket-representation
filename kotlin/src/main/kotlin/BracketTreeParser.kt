@@ -1,7 +1,10 @@
 object BracketTreeParser {
     fun parse(bracketTree: String): Node = this.parseBracketTreeStringToNode(bracketTree, 0, bracketTree.length)
 
-    private fun getIndexOfClosingBracket(bracketTree: String, startIndex: Int): Int {
+    private fun getIndexOfClosingBracket(
+        bracketTree: String,
+        startIndex: Int,
+    ): Int {
         if (bracketTree[startIndex] != '(') {
             throw ParseException("expected '${"("}' but found '${bracketTree[startIndex]}' at index $startIndex")
         }
@@ -19,7 +22,11 @@ object BracketTreeParser {
         return -1
     }
 
-    private fun parseBracketTreeStringToNode(bracketTree: String, startIndex: Int, endIndex: Int): Node {
+    private fun parseBracketTreeStringToNode(
+        bracketTree: String,
+        startIndex: Int,
+        endIndex: Int,
+    ): Node {
         val sb = StringBuilder()
 
         var childTreeStartIndex = startIndex
