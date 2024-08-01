@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-def jUnitVersion = "5.10.2"
+def jUnitVersion = "5.10.3"
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
