@@ -23,7 +23,7 @@ dependencies {
     // - needed for parametrized tests
     testImplementation("org.junit.jupiter:junit-jupiter-params:${jUnitVersion}")
     // - needed to parse example JSON test cases
-    testImplementation("com.google.code.gson:gson:2.10.1")
+    testImplementation("com.google.code.gson:gson:2.11.0")
 }
 
 test {
